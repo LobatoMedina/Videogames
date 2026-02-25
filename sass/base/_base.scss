@@ -1,0 +1,39 @@
+@use "variables" as v;
+@use "mixins" as m;
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    font-size: 2rem;
+    font-family: v.$font;
+    background-color: v.$dark;
+    color: v.$white;
+}
+input[type="text"]{
+    border-radius: 2rem;
+    border: .4rem solid v.$black;
+    font-size: 2rem;
+}
+a{
+    color: v.$white;
+    @include m.transition(color);
+    &:hover{
+        color: v.$black;
+    }
+}
+@for $i from 1 through 6{
+    h#{$i}{
+        margin : 0;
+        padding: 0;
+        font-size: 4.5rem - calc($i / 2);
+        font-family: v.$fontTitle;
+    }
+}

@@ -1,0 +1,20 @@
+@use "sass:color" as color;
+$PrimaryColor: #293667;
+$DarknessP: color.scale($PrimaryColor, $lightness: -15%);
+$SecondaryColor: #004daa;
+$dark: #222;
+$light: #eee;
+$black: #000;
+$white: #fff;
+//me gusto este color xdxdxdxdxd #abffff
+/******************** Device Sizes ********************/
+$phone: 320px;
+$tablet:720px;
+$desktop: 1200px;
+$desktopXl: 2400px;
+
+
+/*Fonts*/
+$font: "Poppins", sans-serif;
+$fontTitle: "Montserrat",sans-serif;
+

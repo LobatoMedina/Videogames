@@ -1,0 +1,71 @@
+@use "variables" as v;
+
+@mixin container{
+    width: min(120rem,100%);
+    margin: 0 auto;
+}
+@mixin transition($property){
+    text-decoration: none;
+    transition: ease-in-out;
+    transition-duration: .5s;
+    transition-property: $property;
+}
+@mixin button($color, $bgColor){
+    border-radius: 2rem;
+    background-color: $bgColor;
+    color: $color;
+    border: $color solid .2rem;
+    transition-property: background-color;
+    transition-property: color;
+    transition-property: border-color;
+    transition: ease-in-out;
+    transition-duration: .5s;
+    cursor: pointer;
+    min-width: 10rem;
+    min-height: 5rem;
+    &:hover{
+        background-color: $color;
+        color: $bgColor;
+        border-color: $bgColor ;
+    }
+}
+// display
+@mixin grid_columns($n){
+    display: grid;
+    grid-template-columns: repeat($n , 1fr);
+    gap: 1rem;
+}
+
+@mixin grid_rows($n){
+    display: grid;
+    grid-template-rows: repeat($n,1fr);
+    gap: 1rem;
+}
+@mixin flex_a_center($v){
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: $v;
+}
+
+// MEDIA QUERIES
+@mixin phone{
+    @media (min-width : v.$phone) {
+        @content;
+    }
+};
+@mixin tablet{
+    @media (min-width : v.$tablet) {
+        @content;
+    }
+};
+@mixin desktop{
+    @media (min-width : v.$desktop) {
+        @content;
+    }
+};
+@mixin desktopXl{
+    @media (min-width : v.$desktopXl) {
+        @content;
+    }
+};
