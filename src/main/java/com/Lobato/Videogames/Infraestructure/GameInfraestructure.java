@@ -16,14 +16,18 @@ public interface GameInfraestructure extends CrudRepository<GameEntity, Integer>
 
     );
     @Procedure(procedureName = "sp_add_genreToMovie")
-    void addNewGenre(@Param("_GameId") int gameId,@Param("_genreId") int genre);
+    void addNewGenre(@Param("_GameId") int gameId,
+                     @Param("_genreId") int genre);
 
     @Procedure(procedureName = "sp_remove_genreToVIdeogame")
-    void removeGenre(@Param("_idVideogame") int gameId,@Param("_idGenre") int genre);
+    void removeGenre(@Param("_idVideogame") int gameId,
+                     @Param("_idGenre") int genre);
 
     @Procedure(procedureName = "sp_add_platformToGame")
-    void addNewPlatform(@Param("_GameId") int gameId,@Param("_idGenre") int genre);
+    void addNewPlatform(@Param("_GameId") int gameId,
+                        @Param("_idGenre") int genre);
 
     @Procedure(procedureName = "sp_remove_platform")
-    void removePlatform(@Param("_idVideogame") int gameId,@Param("_idPlatform") int genre);
+    void removePlatform(@Param("_idVideogame") int gameId,
+                        @Param("_idPlatform") int genre);
 }
