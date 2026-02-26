@@ -9,11 +9,12 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 public interface GameInfraestructure extends JpaRepository<GameEntity, Integer> {
-    @Procedure(name = "sp_gameAdd")
+    @Procedure(name = "sp_gameAdd", outputParameterName = "_id")
      Integer addNewGame(
             @Param("_nombre") String name,
             @Param("_srbId") Integer srbId,
             @Param("_urlImage") String url,
+            @Param("_author") String author,
             @Param("_specs") String specs,
             @Param("_price") double price
 

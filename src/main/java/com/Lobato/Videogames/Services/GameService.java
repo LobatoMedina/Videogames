@@ -18,18 +18,17 @@ public class GameService {
                 dtoVideogame.getName(),
                 dtoVideogame.getEsrbid(),
                 dtoVideogame.getImgUrl(),
+                dtoVideogame.getAuthor(),
                 dtoVideogame.getSpecs(),
-                dtoVideogame.getPrice());
-        System.out.println(id_game);
+                dtoVideogame.getPrice()
+                );
         if(dtoVideogame.getGenres() != null){
             for(var id_genre : dtoVideogame.getGenres()){
-                System.out.println(id_genre);
                 gameInfraestructure.addNewGenre(id_game, id_genre);
             }
         }
         if(dtoVideogame.getPlatforms() != null){
             for(var id_platform : dtoVideogame.getPlatforms()){
-                System.out.println(id_platform);
                 gameInfraestructure.addNewPlatform(id_game, id_platform);
             }
         }

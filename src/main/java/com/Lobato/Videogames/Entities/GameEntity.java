@@ -8,6 +8,7 @@ import jakarta.persistence.*;
         @StoredProcedureParameter(name = "_nombre", mode = ParameterMode.IN,type = String.class),
         @StoredProcedureParameter(name = "_srbId", mode = ParameterMode.IN, type = Integer.class),
         @StoredProcedureParameter(name = "_urlImage", mode = ParameterMode.IN, type = String.class),
+        @StoredProcedureParameter(name = "_author", mode = ParameterMode.IN, type = String.class),
         @StoredProcedureParameter(name = "_specs", mode = ParameterMode.IN, type = String.class),
         @StoredProcedureParameter(name = "_price", mode = ParameterMode.IN, type = Double.class),
         @StoredProcedureParameter(name = "_id", mode = ParameterMode.OUT, type = Integer.class)
