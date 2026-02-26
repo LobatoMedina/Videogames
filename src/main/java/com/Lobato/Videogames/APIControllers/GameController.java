@@ -1,4 +1,4 @@
-package com.Lobato.Videogames.Controllers;
+package com.Lobato.Videogames.APIControllers;
 
 import com.Lobato.Videogames.DTOs.DTOVideogame;
 import com.Lobato.Videogames.Services.GameService;
@@ -20,7 +20,6 @@ public class GameController {
         }catch (Exception e){
             e.printStackTrace();
         }
-
         return false;
     }
 
