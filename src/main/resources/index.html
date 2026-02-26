@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Viewer</title>
+</head>
+<body>
+    <header class="header">
+        <div class="header__container">
+            <div class="header__container__element">
+                <h1>Titulo x</h1>
+            </div>
+            <div class="header__container__element">
+                <a href="">Decorativo</a>
+            </div>
+        </div>
+    </header>
+    <main>
+        <form>
+            <fieldset>
+                <legend>Añade un nuevo videohuevos</legend>
+                <div>
+                    <label for="name">Nombre</label>
+                    <input id="name" type="text">
+                    <label for="esrb">Categoria</label>
+                    <select id="esrb">
+                        <option disabled selected value="-1">Selecciona una</option>
+                    </select>
+                    <label for="image">agrega la url de la imagen</label>
+                    <input id="image" type="text">
+                    <label for="author">Nombre del autor</label>
+                    <input type="text" id="author">
+                    <label for="specs">Especificaciones</label>
+                    <textarea id="specs"></textarea>
+                    <label for="precio">Precio</label>
+                    <input id="precio" type="number" min="0" >
+                    <div class="form_options">
+                        <select id="genres">
+                            <option selected disabled value="-1">generos</option>
+                        </select>
+                        <input type="button" id="add_genre" value="AddGenres">
+                    </div>
+                    <div class="form_options">
+                        <select id="platforms">
+                            <option selected disabled value="-1">platafromas</option>
+                        </select>
+                        <input type="button" id="add_platforms" value="añadir">
+                    </div>
+                    <input type="button" value="añadir juego" id="addGame">
+                </div>
+            </fieldset>
+        </form>
+    </main>
+    <footer class="footer">
+        <div class="footer__container">
+
+        </div>
+    </footer>
+    <script>
+
+    </script>
+</body>
+</html>
