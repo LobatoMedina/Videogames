@@ -1,11 +1,8 @@
 package com.Lobato.Videogames.Infraestructure;
 
 import com.Lobato.Videogames.Entities.GameEntity;
-import jakarta.persistence.ParameterMode;
-import jakarta.persistence.StoredProcedureParameter;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.query.Procedure;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 public interface GameInfraestructure extends JpaRepository<GameEntity, Integer> {
@@ -29,7 +26,7 @@ public interface GameInfraestructure extends JpaRepository<GameEntity, Integer> 
 
     @Procedure(procedureName = "sp_add_platformToGame")
     void addNewPlatform(@Param("_GameId") Integer gameId,
-                        @Param("_idGenre") Integer genre);
+                        @Param("_platform") Integer platform);
 
     @Procedure(procedureName = "sp_remove_platform")
     void removePlatform(@Param("_idVideogame") Integer gameId,

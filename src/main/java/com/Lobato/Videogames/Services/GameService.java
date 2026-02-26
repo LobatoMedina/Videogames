@@ -23,12 +23,12 @@ public class GameService {
                 dtoVideogame.getPrice()
                 );
         if(dtoVideogame.getGenres() != null){
-            for(var id_genre : dtoVideogame.getGenres()){
+            for(Integer id_genre : dtoVideogame.getGenres()){
                 gameInfraestructure.addNewGenre(id_game, id_genre);
             }
         }
         if(dtoVideogame.getPlatforms() != null){
-            for(var id_platform : dtoVideogame.getPlatforms()){
+            for(Integer id_platform : dtoVideogame.getPlatforms()){
                 gameInfraestructure.addNewPlatform(id_game, id_platform);
             }
         }
