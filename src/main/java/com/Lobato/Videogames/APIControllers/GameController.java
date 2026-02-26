@@ -1,7 +1,8 @@
 package com.Lobato.Videogames.APIControllers;
 
 import com.Lobato.Videogames.DTOs.DTOVideogame;
-import com.Lobato.Videogames.Services.GameService;
+import com.Lobato.Videogames.Services.Implementations.GameService;
+import com.Lobato.Videogames.Services.Interfaces.IGameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/game")
 public class GameController {
     @Autowired
-    private GameService gameService;
+    private IGameService gameService;
     @PostMapping("/add")
     public Boolean insertGame(
             @RequestBody DTOVideogame videogame
