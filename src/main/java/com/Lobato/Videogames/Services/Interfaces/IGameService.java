@@ -3,6 +3,8 @@ package com.Lobato.Videogames.Services.Interfaces;
 import com.Lobato.Videogames.DTOs.DTOVideogame;
 
 public interface IGameService {
-    void addNewVideogame(DTOVideogame dtoVideogame);
-
+    Integer addNewVideogame(DTOVideogame dtoVideogame);
+    void deleteVideogame(Integer id);
+    void deletePlatformToVideogame(Integer platformId, Integer videogameId);
+    void deleteGenreToVideogame(Integer genreId, Integer videogameId);
 }

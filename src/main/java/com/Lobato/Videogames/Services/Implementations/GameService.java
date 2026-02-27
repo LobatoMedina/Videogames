@@ -15,7 +15,7 @@ public class GameService implements IGameService {
     private GameInfraestructure gameInfraestructure;
     @Transactional
     @Override
-    public void addNewVideogame(DTOVideogame dtoVideogame){
+    public Integer addNewVideogame(DTOVideogame dtoVideogame){
         Integer id_game= gameInfraestructure.addNewGame(
                 dtoVideogame.getName(),
                 dtoVideogame.getEsrbid(),
@@ -33,6 +33,34 @@ public class GameService implements IGameService {
             for(Integer id_platform : dtoVideogame.getPlatforms()){
                 gameInfraestructure.addNewPlatform(id_game, id_platform);
             }
+        }
+        return id_game;
+    }
+
+    @Override
+    public void deleteVideogame(Integer id) {
+        try{
+            gameInfraestructure.deleteVideogame(id);
+        }catch (Exception e) {
+            throw new RuntimeException("error al eliminar un videojuego con la excepcion: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void deletePlatformToVideogame(Integer platformId, Integer videogameId) {
+        try{
+            gameInfraestructure.removePlatform(videogameId,platformId);
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Error al eliminar una plataforma "+e.getMessage());
+        }
+    }
+
+    @Override
+    public void deleteGenreToVideogame(Integer genreId, Integer videogameId) {
+        try{
+            gameInfraestructure.removeGenre(videogameId,genreId);
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Error al eliminar un genero de un videojuego "+e.getMessage());
         }
     }
 

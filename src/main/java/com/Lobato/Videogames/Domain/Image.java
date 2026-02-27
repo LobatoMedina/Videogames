@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Date;
+import java.time.LocalDate;
 
 
 public class Image implements IResource {
@@ -20,15 +22,15 @@ public class Image implements IResource {
     }
 
     @Override
-    public String  createUrl(String videogameName){
-        return "../image/"+videogameName+".jpg";
+    public String  getUrl(String videogameName){
+        return "../image/"+videogameName+ LocalDate.now().toString()+".jpg";
     }
 
 
     @Override
     public boolean saveResource() {
         String format  = "jpg";
-        File file = new File(createUrl(this.videogameName));
+        File file = new File(getUrl(this.videogameName));
         try{
             ImageIO.write(this.image2D,format,file);
         }catch (IOException e){
@@ -39,7 +41,7 @@ public class Image implements IResource {
     }
 
     @Override
-    public String loadResource() {
+    public String loadResource(String nameResource) {
         return "";
     }
 }

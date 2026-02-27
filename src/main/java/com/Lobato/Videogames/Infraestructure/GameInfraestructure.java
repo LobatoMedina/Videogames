@@ -33,5 +33,5 @@ public interface GameInfraestructure extends JpaRepository<GameEntity, Integer> 
                         @Param("_idPlatform") Integer platform);
 
     @Procedure(procedureName = "sp_delete_videogame")
-    void delteVideogame(@Param("_idVideogame") Integer id);
+    void deleteVideogame(@Param("_idVideogame") Integer id);
 }
