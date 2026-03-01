@@ -1,4 +1,4 @@
-package com.Lobato.Videogames.Entities;
+package com.Lobato.Videogames.permanece.Entities;
 
 import jakarta.persistence.*;
 

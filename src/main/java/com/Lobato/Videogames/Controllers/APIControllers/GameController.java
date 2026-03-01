@@ -1,7 +1,6 @@
-package com.Lobato.Videogames.APIControllers;
+package com.Lobato.Videogames.Controllers.APIControllers;
 
-import com.Lobato.Videogames.DTOs.DTOVideogame;
-import com.Lobato.Videogames.Services.Implementations.GameService;
+import com.Lobato.Videogames.permanece.DTOs.DTOVideogame;
 import com.Lobato.Videogames.Services.Interfaces.IGameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

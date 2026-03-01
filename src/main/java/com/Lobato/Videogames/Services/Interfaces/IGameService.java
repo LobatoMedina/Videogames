@@ -1,6 +1,6 @@
 package com.Lobato.Videogames.Services.Interfaces;
 
-import com.Lobato.Videogames.DTOs.DTOVideogame;
+import com.Lobato.Videogames.permanece.DTOs.DTOVideogame;
 
 public interface IGameService {
     Integer addNewVideogame(DTOVideogame dtoVideogame);

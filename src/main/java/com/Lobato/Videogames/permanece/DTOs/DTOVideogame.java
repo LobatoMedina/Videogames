@@ -1,6 +1,4 @@
-package com.Lobato.Videogames.DTOs;
-
-import com.Lobato.Videogames.Entities.GenreEntity;
+package com.Lobato.Videogames.permanece.DTOs;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
 package com.Lobato.Videogames.Services.Implementations;
 
 
-import com.Lobato.Videogames.DTOs.DTOVideogame;
-import com.Lobato.Videogames.Infraestructure.GameInfraestructure;
+import com.Lobato.Videogames.permanece.DTOs.DTOVideogame;
+import com.Lobato.Videogames.permanece.Infraestructure.GameInfraestructure;
 import com.Lobato.Videogames.Services.Interfaces.IGameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
