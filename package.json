@@ -14,8 +14,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "sass:compile": "sass sass/:src/main/resources/static/css",
-    "sass:watch": "sass --watch sass/:src/main/resources/static/css"
+    "sass:compile": "sass sass:src/main/resources/static/css",
+    "sass:watch": "sass --watch sass:src/main/resources/static/css"
   },
   "dependencies": {
     "sass": "^1.97.3"
