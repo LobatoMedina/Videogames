@@ -58,7 +58,30 @@
         </div>
     </footer>
     <script>
+        //prueba
+        addGame.addEventListener("click", () =>{
+            const data = {
 
+            }
+            fetch(
+                "localhost:8080/api/game/add",
+                {
+                    headers: {
+                        'Content-Type': 'application/json; charset=UTF-8' // *Headers* specify the content type
+                    },
+                    data
+                }
+            ).then( response =>{
+                    if(!response.ok){
+                        // excepcion
+                    }
+                    return response.json();
+                } 
+            ).then(json=>{
+                
+            })
+
+        });
     </script>
 </body>
 </html>
