@@ -5,7 +5,6 @@
     margin: 0 auto;
 }
 @mixin transition($property){
-    text-decoration: none;
     transition: ease-in-out;
     transition-duration: .5s;
     transition-property: $property;

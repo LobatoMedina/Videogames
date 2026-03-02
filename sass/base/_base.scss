@@ -20,6 +20,7 @@ body{
 
 a{
     color: v.$white;
+    text-decoration: none;
     @include m.transition(color);
     &:hover{
         color: v.$black;

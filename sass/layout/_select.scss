@@ -1,0 +1,11 @@
+@use "../base/variables" as v;
+@use "../base/mixins" as m;
+main{
+    gap: 2rem;
+    #videogames{
+        @include m.container;
+        margin-top: 1%;
+        background-color: v.$white;
+        color: v.$black;
+    }
+}

@@ -16,12 +16,13 @@
                 <h1>Titulo x</h1>
             </div>
             <div class="header__container__element">
-                <a href="">Decorativo</a>
+                <a href="#form">Insertar</a>
+                <a href="#videogames">Ver</a>
             </div>
         </div>
     </header>
     <main>
-        <form class="form">
+        <form class="form" id="#form">
             <fieldset>
                 <legend>Añade un nuevo videohuevos</legend>
                 <div>
@@ -84,6 +85,18 @@
         //prueba
         window.addEventListener("load", ()=> {
             //load game
+        })
+        const header = document.querySelector(".header");
+        window.addEventListener("scroll", () => {
+            if(scrollY >= 50){
+                if(!header.classList.contains("transparent"))
+                header.classList.add("transparent");
+                else return;
+            }else{
+                if(header.classList.contains("transparent"))
+                header.classList.remove("transparent");
+                else return;
+            }
         })
         addGame.addEventListener("click", () =>{
             const data = {

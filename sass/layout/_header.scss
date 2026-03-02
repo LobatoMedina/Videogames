@@ -6,9 +6,37 @@
     padding: 1rem;
     margin-bottom: 1%;
     border-bottom: v.$secondaryColor solid .3rem;
+    position: sticky;
+    top: 0%;
     .header__container{
         @include m.container;
         @include m.flex_a_center(space-between);
-    }
+        .header__container__element{
+            width: 100%;
 
+            
+            &:last-child{
+                @include m.flex_a_center(space-evenly);
+            }
+        }
+    }
+}
+.transparent{
+    background-color: transparent;
+    backdrop-filter: blur(5px);
+    color: v.$dark;
+    @include m.transition(background-color);
+    a{
+        color: v.$dark;
+    }
+    &:hover{
+        background-color: v.$primaryColor;
+        a, h1{
+            @include m.transition(color);
+            color: v.$white;
+            &:hover{
+                color: v.$secondaryColor;
+            }
+        }
+    }
 }
