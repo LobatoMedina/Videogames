@@ -7,5 +7,8 @@ main{
         margin-top: 1%;
         background-color: v.$white;
         color: v.$black;
+        tr{
+            border-bottom:.1rem solid v.$dark ;
+        }
     }
 }
