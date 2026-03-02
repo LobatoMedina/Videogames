@@ -2,8 +2,14 @@ package com.Lobato.Videogames.Services.Implementations;
 
 
 import com.Lobato.Videogames.permanece.DTOs.DTOVideogame;
+import com.Lobato.Videogames.permanece.Entities.EsrbEntity;
+import com.Lobato.Videogames.permanece.Entities.GenreEntity;
+import com.Lobato.Videogames.permanece.Entities.PlatformEntity;
+import com.Lobato.Videogames.permanece.Infraestructure.EsrbRepository;
 import com.Lobato.Videogames.permanece.Infraestructure.GameInfraestructure;
 import com.Lobato.Videogames.Services.Interfaces.IGameService;
+import com.Lobato.Videogames.permanece.Infraestructure.GenreRepository;
+import com.Lobato.Videogames.permanece.Infraestructure.PlatformRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,20 +20,35 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalTime;
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class GameService implements IGameService {
 
     @Autowired
+    private EsrbRepository esrbRepository;
+    @Autowired
+    private GenreRepository genreRepository;
+    @Autowired
+    private PlatformRepository platformRepository;
+    @Autowired
     private GameInfraestructure gameInfraestructure;
     private final Path root = Paths.get("uploads");
+    private static final List<String> ALLOWED_TYPES = Arrays.asList("image/jpeg", "image/png", "image/webp");
     @Transactional
     @Override
     public Integer addNewVideogame(DTOVideogame dtoVideogame, MultipartFile file) throws IOException {
+        String contentType = file.getContentType();
+        if (contentType == null || !ALLOWED_TYPES.contains(contentType)) {
+            throw new IOException("Formato de archivo no permitido. Solo se aceptan JPG, PNG y WEBP.");
+        }
         if (!Files.exists(root)) {
             Files.createDirectories(root);
         }
-        String fileName = LocalTime.now() + "_" + file.getOriginalFilename();
+        String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+        String fileName = LocalTime.now() + "."+ extension ;
+
         Files.copy(file.getInputStream(), this.root.resolve(fileName));
         Integer id_game= gameInfraestructure.addNewGame(
                 dtoVideogame.getName(),
@@ -75,6 +96,21 @@ public class GameService implements IGameService {
         } catch (RuntimeException e) {
             throw new RuntimeException("Error al eliminar un genero de un videojuego "+e.getMessage());
         }
+    }
+
+    @Override
+    public List<EsrbEntity> getAllEsrb() {
+        return esrbRepository.findAll();
+    }
+
+    @Override
+    public List<GenreEntity> getAllGenres() {
+        return genreRepository.findAll();
+    }
+
+    @Override
+    public List<PlatformEntity> getAllPlatforms() {
+        return platformRepository.findAll();
     }
 
 }

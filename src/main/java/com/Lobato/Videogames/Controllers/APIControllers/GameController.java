@@ -2,9 +2,14 @@ package com.Lobato.Videogames.Controllers.APIControllers;
 
 import com.Lobato.Videogames.permanece.DTOs.DTOVideogame;
 import com.Lobato.Videogames.Services.Interfaces.IGameService;
+import com.Lobato.Videogames.permanece.Entities.EsrbEntity;
+import com.Lobato.Videogames.permanece.Entities.GenreEntity;
+import com.Lobato.Videogames.permanece.Entities.PlatformEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/game")
@@ -24,6 +29,16 @@ public class GameController {
         }
         return false;
     }
-
-
+    @GetMapping("/genre")
+    public List<GenreEntity> getAllGenres(){
+        return gameService.getAllGenres();
+    }
+    @GetMapping("/platforms")
+    public List<PlatformEntity> getAllPlatform(){
+        return gameService.getAllPlatforms();
+    }
+    @GetMapping("/esrb")
+    public List<EsrbEntity> getAllEsrb(){
+        return gameService.getAllEsrb();
+    }
 }
