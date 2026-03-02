@@ -7,19 +7,32 @@ import com.Lobato.Videogames.Services.Interfaces.IGameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalTime;
 
 @Service
 public class GameService implements IGameService {
 
     @Autowired
     private GameInfraestructure gameInfraestructure;
+    private final Path root = Paths.get("uploads");
     @Transactional
     @Override
-    public Integer addNewVideogame(DTOVideogame dtoVideogame){
+    public Integer addNewVideogame(DTOVideogame dtoVideogame, MultipartFile file) throws IOException {
+        if (!Files.exists(root)) {
+            Files.createDirectories(root);
+        }
+        String fileName = LocalTime.now() + "_" + file.getOriginalFilename();
+        Files.copy(file.getInputStream(), this.root.resolve(fileName));
         Integer id_game= gameInfraestructure.addNewGame(
                 dtoVideogame.getName(),
                 dtoVideogame.getEsrbid(),
-                dtoVideogame.getImgUrl(),
+                fileName,
                 dtoVideogame.getAuthor(),
                 dtoVideogame.getSpecs(),
                 dtoVideogame.getPrice()
