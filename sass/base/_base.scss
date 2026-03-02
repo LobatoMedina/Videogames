@@ -17,11 +17,7 @@ body{
     background-color: v.$dark;
     color: v.$white;
 }
-input[type="text"]{
-    border-radius: 2rem;
-    border: .4rem solid v.$black;
-    font-size: 2rem;
-}
+
 a{
     color: v.$white;
     @include m.transition(color);

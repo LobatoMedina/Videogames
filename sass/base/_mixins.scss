@@ -15,11 +15,10 @@
     background-color: $bgColor;
     color: $color;
     border: $color solid .2rem;
-    transition-property: background-color;
-    transition-property: color;
-    transition-property: border-color;
     transition: ease-in-out;
     transition-duration: .5s;
+    font-family: v.$font;
+    font-weight: bold;
     cursor: pointer;
     min-width: 10rem;
     min-height: 5rem;

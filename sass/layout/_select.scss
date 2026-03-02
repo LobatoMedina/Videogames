@@ -1,0 +1,67 @@
+@use "../base/variables" as v;
+@use "../base/mixins" as m;
+select, option{
+    font-size: 2rem;
+    text-align: center;
+    padding: 1%;
+    background-color: v.$white;
+    border-radius: 4rem;
+    border: v.$dark solid .2rem;
+}
+
+.form{
+    background-color: v.$white;
+    color: v.$black;
+    @include m.container;
+    fieldset{ 
+        padding: 5%;
+        border: none;
+        legend{
+            font-family: v.$fontTitle;
+            font-weight: bold;
+            font-size: 4rem;
+            text-align: center;
+        }
+        div{
+            width: 100%;
+            @include m.grid_columns(2);
+            padding: 1% 0;
+            .useAllColumns{
+                grid-column-start: 1;
+                grid-column-end: 3;
+            }
+            div.useAllColumns{
+                padding: 0;
+            }    
+            input, label{
+                font-size: 2rem;
+            }
+            input[type="text"], input[type="number"],textarea{
+                border-radius: 2rem;
+                border: .2rem solid v.$black;
+                font-size: 2rem;
+                padding: .5rem;
+            }
+            input[type="button"], input::file-selector-button{
+                @include m.button(v.$light, v.$secondaryColor);
+                text-transform: capitalize;
+
+            }
+            label{
+                text-transform: capitalize;
+                &::after{
+                    content: " :";
+                }
+                &::before{
+                    content: "* ";
+                    color: red;
+                }
+            }
+            textarea{
+                min-height: 20rem;
+                
+
+            }
+        }
+    }
+}

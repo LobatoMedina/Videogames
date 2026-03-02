@@ -21,40 +21,59 @@
         </div>
     </header>
     <main>
-        <form>
+        <form class="form">
             <fieldset>
                 <legend>Añade un nuevo videohuevos</legend>
                 <div>
-                    <label for="name">Nombre</label>
-                    <input id="name" type="text">
+                    <label for="nameInput">Nombre</label>
+                    <input id="nameInput" type="text">
                     <label for="esrb">Categoria</label>
                     <select id="esrb">
                         <option disabled selected value="-1">Selecciona una</option>
                     </select>
-                    <label for="image">agrega la url de la imagen</label>
-                    <input id="image" type="text">
+                    <label for="image">imagen</label>
+                    <input type="file" name="image" id="image">
                     <label for="author">Nombre del autor</label>
                     <input type="text" id="author">
                     <label for="specs">Especificaciones</label>
                     <textarea id="specs"></textarea>
                     <label for="precio">Precio</label>
-                    <input id="precio" type="number" min="0" >
-                    <div class="form_options">
+                    <input id="precio" type="number" min="0" max="10000">
+                    <div class="useAllColumns">
                         <select id="genres">
                             <option selected disabled value="-1">generos</option>
                         </select>
                         <input type="button" id="add_genre" value="AddGenres">
+                        <div id="selectedGenres" class="useAllColumns">
+
+                        </div>
                     </div>
-                    <div class="form_options">
+                    <div class="useAllColumns">
                         <select id="platforms">
                             <option selected disabled value="-1">platafromas</option>
                         </select>
                         <input type="button" id="add_platforms" value="añadir">
+                        <div id="selectedPlatforms" class="useAllColumns">
+
+                        </div>
                     </div>
-                    <input type="button" value="añadir juego" id="addGame">
+                    <input type="button" value="añadir juego" id="addGame" class="useAllColumns">
                 </div>
             </fieldset>
         </form>
+        <table id="videogames">
+            <tr>
+                <th>Name</th>
+                <th>esrb</th>
+                <th>image</th>
+                <th>author</th>
+                <th>specs</th>
+                <th>precio</th>
+                <th>genres</th>
+                <th>platform</th>
+                <th>options</th>
+            </tr>
+        </table>
     </main>
     <footer class="footer">
         <div class="footer__container">
@@ -63,6 +82,9 @@
     </footer>
     <script>
         //prueba
+        window.addEventListener("load", ()=> {
+            //load game
+        })
         addGame.addEventListener("click", () =>{
             const data = {
 
@@ -86,6 +108,17 @@
             })
 
         });
+        const clearInputs = () =>{
+            nameInput.value="";
+            esrb.value= -1;
+            image.value= '';
+            author.value= "";
+            specs.value='';
+            precio.value=0;
+            genres.value= -1;
+            selectedGenres.innerHTML="";
+            platforms.value = -1;
+        };
     </script>
 </body>
 </html>

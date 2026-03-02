@@ -1,7 +1,7 @@
 @use "sass:color" as color;
-$PrimaryColor: #293667;
-$DarknessP: color.scale($PrimaryColor, $lightness: -15%);
-$SecondaryColor: #004daa;
+$primaryColor: #293667;
+$darknessP: color.scale($primaryColor, $lightness: -15%);
+$secondaryColor: #056a54;
 $dark: #222;
 $light: #eee;
 $black: #000;
@@ -16,5 +16,5 @@ $desktopXl: 2400px;
 
 /*Fonts*/
 $font: "Poppins", sans-serif;
-$fontTitle: "Montserrat",sans-serif;
+$fontTitle: "Montserrat";
 

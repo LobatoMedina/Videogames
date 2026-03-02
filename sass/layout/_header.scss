@@ -2,6 +2,13 @@
 @use "../base/mixins" as m;
 
 .header{
-    background-color: aqua;
+    background-color: v.$primaryColor;
+    padding: 1rem;
+    margin-bottom: 1%;
+    border-bottom: v.$secondaryColor solid .3rem;
+    .header__container{
+        @include m.container;
+        @include m.flex_a_center(space-between);
+    }
 
 }
