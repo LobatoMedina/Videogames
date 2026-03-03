@@ -1,4 +1,4 @@
-//prueba
+
 var genresA= []
 var platformsA = [];
 window.addEventListener("load", ()=> {
@@ -12,7 +12,7 @@ const loadElements = (url, parent) =>{
         url,
         {
             headers: {
-                'Content-Type': 'application/json; charset=UTF-8' // *Headers* specify the content type
+                'Content-Type': 'application/json; charset=UTF-8' 
             }
         }
     ).then(data => {
@@ -43,24 +43,39 @@ window.addEventListener("scroll", () => {
     }
 })
 addGame.addEventListener("click", () =>{
-    const data = {}
-    fetch(
+    let info = document.getElementById("info");
+    if(!validateValues()){return}
+    data = getJsonValues();
+    try{
+        fetch(
         "localhost:8080/api/game/add",
         {
+            method: "POST",
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8' // *Headers* specify the content type
             },
-            data
+           body: {
+            "DTO" : getJsonValues(),
+            "image": image.value
+           }
         }
     ).then( response =>{
-            if(!response.ok){
-                // excepcion
+            
+            if(response.ok){
+                info.innerHTML = "VideoJuego agregado"
+                info.classList().add("success");
+            }else{
+                info.innerHTML = "Videojuego no agregado hubo un error al enviar el registro"
+                info.classList().add("warning");
             }
-            return response.json();
         } 
-    ).then(json=>{
-        })
-});
+    )
+    }catch(e){
+        info.innerHTML = "Llamen a dios"
+        info.classList().add("danger");
+    }
+    clearInputs();
+    });
 const clearInputs = () =>{
     nameInput.value="";
     esrb.value= -1;
@@ -74,7 +89,38 @@ const clearInputs = () =>{
     genresA.length =0;
     platformsA.length =0;
 };
-
+const validateValues = ()=>{
+    let campos= document.querySelectorAll("input[type='text'], textarea");
+    campos.forEach(element=>{
+        if(element === ""){
+            info.innerHTML = "Campos vacios, necesarios"
+            info.classList().add("danger");
+            return false;
+        }
+    })
+    if(esrb.value == -1){
+            info.innerHTML = "Es necesaria una categoria"
+            info.classList().add("danger");
+        return false;
+    }
+    if(image.value ===""){
+        info.innerHTML = "Es necesaria una imagen";
+        info.classList().add("danger");
+        return false;
+    }
+    return true;
+}
+const getJsonValues = ()=>{
+    return {
+        named : nameInput.value,
+        esrbid : esrb.value,
+        author :author.value,
+        specs: specs.value,
+        price: precio.value,
+        genres : genresA,
+        platforms : platformsA 
+    }
+}
 add_genre.addEventListener("click",e =>{
     e.preventDefault();
     var entry  = genres.value;

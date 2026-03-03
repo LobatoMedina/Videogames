@@ -45,4 +45,8 @@ public class GameController {
     public List<EsrbDTO> getAllEsrb(){
         return gameService.getAllEsrb();
     }
+    @PostMapping("/update")
+    public boolean updateGame(Integer id){
+        return true;
+    }
 }
