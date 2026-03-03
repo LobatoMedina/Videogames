@@ -77,12 +77,17 @@ const clearInputs = () =>{
 
 add_genre.addEventListener("click",e =>{
     e.preventDefault();
-    genresA.push(genres.value);
+    var entry  = genres.value;
+    if( genresA.indexOf(entry) !== -1) return;
+    genresA.push(entry);
     selectedGenres.appendChild(createEntry(genres.options[genres.selectedIndex].innerHTML, genres.value,selectedGenres,genresA));
 })
 add_platforms.addEventListener("click", e=>{
     e.preventDefault();
-    platformsA.push(platforms.value);
+    let entry = platforms.value;
+    if( platformsA.indexOf(entry) !== -1) return;
+    platformsA.push(entry);
+    selectedPlatforms.appendChild(createEntry(platforms.options[platforms.selectedIndex].innerHTML, platforms.value, selectedPlatforms, platformsA));
 })
 const createEntry = (name = "", id =0, parent,array)=>{
     let div = document.createElement("DIV");
