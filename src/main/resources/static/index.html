@@ -81,57 +81,6 @@
 
         </div>
     </footer>
-    <script>
-        //prueba
-        window.addEventListener("load", ()=> {
-            //load game
-        })
-        const header = document.querySelector(".header");
-        window.addEventListener("scroll", () => {
-            if(scrollY >= 50){
-                if(!header.classList.contains("transparent"))
-                header.classList.add("transparent");
-                else return;
-            }else{
-                if(header.classList.contains("transparent"))
-                header.classList.remove("transparent");
-                else return;
-            }
-        })
-        addGame.addEventListener("click", () =>{
-            const data = {
-
-            }
-            fetch(
-                "localhost:8080/api/game/add",
-                {
-                    headers: {
-                        'Content-Type': 'application/json; charset=UTF-8' // *Headers* specify the content type
-                    },
-                    data
-                }
-            ).then( response =>{
-                    if(!response.ok){
-                        // excepcion
-                    }
-                    return response.json();
-                } 
-            ).then(json=>{
-
-            })
-
-        });
-        const clearInputs = () =>{
-            nameInput.value="";
-            esrb.value= -1;
-            image.value= '';
-            author.value= "";
-            specs.value='';
-            precio.value=0;
-            genres.value= -1;
-            selectedGenres.innerHTML="";
-            platforms.value = -1;
-        };
-    </script>
+    <script src="js/index.js"></script>
 </body>
 </html>

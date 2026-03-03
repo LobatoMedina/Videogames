@@ -2,6 +2,9 @@ package com.Lobato.Videogames.Services.Implementations;
 
 
 import com.Lobato.Videogames.permanece.DTOs.DTOVideogame;
+import com.Lobato.Videogames.permanece.DTOs.EsrbDTO;
+import com.Lobato.Videogames.permanece.DTOs.GenreDTO;
+import com.Lobato.Videogames.permanece.DTOs.PlatformDTO;
 import com.Lobato.Videogames.permanece.Entities.EsrbEntity;
 import com.Lobato.Videogames.permanece.Entities.GenreEntity;
 import com.Lobato.Videogames.permanece.Entities.PlatformEntity;
@@ -16,12 +19,15 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class GameService implements IGameService {
@@ -99,18 +105,56 @@ public class GameService implements IGameService {
     }
 
     @Override
-    public List<EsrbEntity> getAllEsrb() {
-        return esrbRepository.findAll();
+    public List<EsrbDTO> getAllEsrb() {
+        List<EsrbDTO> lista = new ArrayList<>();
+        try{
+            Iterable<EsrbEntity> data = esrbRepository.findAll();
+            for (var element : data){
+                lista.add(new EsrbDTO(
+                        element.getId(), element.getEsrb_esrb(), element.getEsrb_LimitAge()
+                ));
+            }
+        }catch (Exception e){
+            throw new RuntimeException("Mi bombo"+ e.getMessage());
+        }
+
+        return lista;
     }
 
     @Override
-    public List<GenreEntity> getAllGenres() {
-        return genreRepository.findAll();
+    @Transactional
+    public List<GenreDTO> getAllGenres() {
+        List<GenreDTO> lista = new ArrayList<>();
+
+        try{
+            Iterable<GenreEntity> data = genreRepository.findAll();
+            for (var element : data){
+                lista.add(new GenreDTO(
+                    element.getId(), element.getGenre()
+                ));
+            }
+        }catch (Exception e){
+            throw new RuntimeException("Mi bombo"+ e.getMessage());
+        }
+
+        return  lista;
     }
 
     @Override
-    public List<PlatformEntity> getAllPlatforms() {
-        return platformRepository.findAll();
+    public List<PlatformDTO> getAllPlatforms() {
+        List<PlatformDTO> lista = new ArrayList<>();
+        try{
+            Iterable<PlatformEntity> data = platformRepository.findAll();
+            for (var element : data){
+                lista.add(new PlatformDTO(
+                        element.getPlatformId(), element.getPlatform_platform()
+                ));
+            }
+        }catch (Exception e){
+            throw new RuntimeException("Mi bombo"+ e.getMessage());
+        }
+
+        return lista;
     }
 
 }
