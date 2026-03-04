@@ -25,6 +25,9 @@ public class GameEntity {
     private String specs;
     private double price;
 
+    public GameEntity() {
+    }
+
     public GameEntity(Integer id, String name, int esrb_id, String author, String specs, double price) {
         this.id = id;
         this.name = name;

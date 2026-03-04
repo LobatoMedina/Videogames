@@ -1,10 +1,7 @@
 package com.Lobato.Videogames.Services.Implementations;
 
 
-import com.Lobato.Videogames.permanece.DTOs.DTOVideogame;
-import com.Lobato.Videogames.permanece.DTOs.EsrbDTO;
-import com.Lobato.Videogames.permanece.DTOs.GenreDTO;
-import com.Lobato.Videogames.permanece.DTOs.PlatformDTO;
+import com.Lobato.Videogames.permanece.DTOs.*;
 import com.Lobato.Videogames.permanece.Entities.EsrbEntity;
 import com.Lobato.Videogames.permanece.Entities.GenreEntity;
 import com.Lobato.Videogames.permanece.Entities.PlatformEntity;
@@ -44,7 +41,7 @@ public class GameService implements IGameService {
     private static final List<String> ALLOWED_TYPES = Arrays.asList("image/jpeg", "image/png", "image/webp");
     @Transactional
     @Override
-    public Integer addNewVideogame(DTOVideogame dtoVideogame, MultipartFile file) throws IOException {
+    public Integer addNewVideogame(VideoGameInDTO dtoVideogame, MultipartFile file) throws IOException {
         String contentType = file.getContentType();
         if (contentType == null || !ALLOWED_TYPES.contains(contentType)) {
             throw new IOException("Formato de archivo no permitido. Solo se aceptan JPG, PNG y WEBP.");
@@ -149,8 +146,7 @@ public class GameService implements IGameService {
                 lista.add(new PlatformDTO(
                         element.getPlatformId(), element.getPlatform_platform()
                 ));
-            }
-        }catch (Exception e){
+            }       }catch (Exception e){
             throw new RuntimeException("Mi bombo"+ e.getMessage());
         }
 

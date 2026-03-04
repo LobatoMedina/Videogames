@@ -1,5 +1,4 @@
-
-var genresA= []
+var genresA= [];
 var platformsA = [];
 window.addEventListener("load", ()=> {
     //load Metadata
@@ -24,6 +23,7 @@ const loadElements = (url, parent) =>{
         });
     })
 }
+
 const createOptionElement = (value, name, parent) =>{
     let option = document.createElement("OPTION");
     option.value=value;
@@ -42,39 +42,38 @@ window.addEventListener("scroll", () => {
         else return;
     }
 })
-addGame.addEventListener("click", () =>{
+addGame.addEventListener("click", async() =>{
     let info = document.getElementById("info");
-    if(!validateValues()){return}
+    if(!validateValues()){return};
+    const fromData = new FormData();
+    fromData.append("file", image.files[0]);
+    const jsonBlob = new Blob([JSON.stringify(getJsonValues())],{
+        type: "application/json"
+    })
+    fromData.append("videoGameInDTO", jsonBlob);
     data = getJsonValues();
     try{
-        fetch(
-        "localhost:8080/api/game/add",
+
+        const response = await fetch(
+        "http://localhost:8080/api/game/add",
         {
             method: "POST",
-            headers: {
-                'Content-Type': 'application/json; charset=UTF-8' // *Headers* specify the content type
-            },
-           body: {
-            "DTO" : getJsonValues(),
-            "image": image.value
-           }
+           body: fromData
         }
-    ).then( response =>{
-            
-            if(response.ok){
-                info.innerHTML = "VideoJuego agregado"
-                info.classList().add("success");
-            }else{
-                info.innerHTML = "Videojuego no agregado hubo un error al enviar el registro"
-                info.classList().add("warning");
-            }
-        } 
     )
+        if (response.ok) {
+            info.innerHTML = "VideoJuego agregado" ;
+            info.className = "success";
+            clearInputs();
+        } else {
+            info.innerHTML = "Hubo un error al enviar el registro" + response.body;
+            info.className = "warning";
+        }
     }catch(e){
         info.innerHTML = "Llamen a dios"
         info.classList().add("danger");
     }
-    clearInputs();
+    
     });
 const clearInputs = () =>{
     nameInput.value="";
@@ -85,25 +84,29 @@ const clearInputs = () =>{
     precio.value=0;
     genres.value= -1;
     selectedGenres.innerHTML="";
+    selectedPlatforms.innerHTML= "";
     platforms.value = -1;
     genresA.length =0;
     platformsA.length =0;
 };
 const validateValues = ()=>{
     let campos= document.querySelectorAll("input[type='text'], textarea");
+    var bool = true;
     campos.forEach(element=>{
         if(element === ""){
             info.innerHTML = "Campos vacios, necesarios"
             info.classList().add("danger");
-            return false;
+            bool = false;
         }
     })
+    console.log(bool)
+    if(!bool) return bool;
     if(esrb.value == -1){
             info.innerHTML = "Es necesaria una categoria"
             info.classList().add("danger");
         return false;
     }
-    if(image.value ===""){
+    if(!image.files[0]){
         info.innerHTML = "Es necesaria una imagen";
         info.classList().add("danger");
         return false;
@@ -112,25 +115,25 @@ const validateValues = ()=>{
 }
 const getJsonValues = ()=>{
     return {
-        named : nameInput.value,
-        esrbid : esrb.value,
+        name : nameInput.value,
+        esrbid : parseInt(esrb.value),
         author :author.value,
         specs: specs.value,
-        price: precio.value,
+        price: parseFloat(precio.value),
         genres : genresA,
         platforms : platformsA 
-    }
+    };
 }
 add_genre.addEventListener("click",e =>{
     e.preventDefault();
-    var entry  = genres.value;
+    var entry  = parseInt(genres.value);
     if( genresA.indexOf(entry) !== -1) return;
     genresA.push(entry);
     selectedGenres.appendChild(createEntry(genres.options[genres.selectedIndex].innerHTML, genres.value,selectedGenres,genresA));
 })
 add_platforms.addEventListener("click", e=>{
     e.preventDefault();
-    let entry = platforms.value;
+    let entry = parseInt(platforms.value);
     if( platformsA.indexOf(entry) !== -1) return;
     platformsA.push(entry);
     selectedPlatforms.appendChild(createEntry(platforms.options[platforms.selectedIndex].innerHTML, platforms.value, selectedPlatforms, platformsA));

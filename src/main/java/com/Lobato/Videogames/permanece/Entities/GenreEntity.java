@@ -14,6 +14,15 @@ public class GenreEntity {
     @Column(name = "Genre_genre")
     private String genre;
 
+    public GenreEntity() {
+    }
+
+    public GenreEntity(Integer id, String genre) {
+        this.id = id;
+        this.genre = genre;
+    }
+
+
     public Integer getId() {
         return id;
     }

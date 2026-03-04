@@ -1,9 +1,6 @@
 package com.Lobato.Videogames.Services.Interfaces;
 
-import com.Lobato.Videogames.permanece.DTOs.DTOVideogame;
-import com.Lobato.Videogames.permanece.DTOs.EsrbDTO;
-import com.Lobato.Videogames.permanece.DTOs.GenreDTO;
-import com.Lobato.Videogames.permanece.DTOs.PlatformDTO;
+import com.Lobato.Videogames.permanece.DTOs.*;
 import com.Lobato.Videogames.permanece.Entities.EsrbEntity;
 import com.Lobato.Videogames.permanece.Entities.GenreEntity;
 import com.Lobato.Videogames.permanece.Entities.PlatformEntity;
@@ -14,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface IGameService {
-    Integer addNewVideogame(DTOVideogame dtoVideogame, MultipartFile multipartFile) throws IOException;
+    Integer addNewVideogame(VideoGameInDTO dtoVideogame, MultipartFile multipartFile) throws IOException;
     void deleteVideogame(Integer id);
     void deletePlatformToVideogame(Integer platformId, Integer videogameId);
     void deleteGenreToVideogame(Integer genreId, Integer videogameId);
