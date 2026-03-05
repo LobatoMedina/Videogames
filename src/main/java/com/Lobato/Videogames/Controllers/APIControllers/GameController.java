@@ -34,15 +34,14 @@ public class GameController {
     public ResponseEntity<String> insertGame(
             @RequestPart VideoGameInDTO videoGameInDTO,
             @RequestPart MultipartFile file
-            ){
-        try{
+            ) {
+        try {
             gameService.addNewVideogame(videoGameInDTO, file);
             return new ResponseEntity<String>("Agregado correctamente", HttpStatus.OK);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
     @GetMapping("/genre")
     public List<GenreDTO> getAllGenres(){

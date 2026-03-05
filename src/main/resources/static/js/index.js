@@ -6,8 +6,8 @@ window.addEventListener("load", ()=> {
     loadElements("http://localhost:8080/api/game/platforms",platforms);
     loadElements("http://localhost:8080/api/game/esrb",esrb);
 })
-const loadElements = (url, parent) =>{
-    fetch(
+const loadElements = async(url, parent) =>{
+    await fetch(
         url,
         {
             headers: {
