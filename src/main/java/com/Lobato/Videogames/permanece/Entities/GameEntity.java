@@ -18,11 +18,18 @@ import jakarta.persistence.*;
 public class GameEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "VideogameId")
     private Integer id;
+    @Column(name ="Videogame_videogame")
     private String name;
+    @Column(name =  "esrb_id")
     private int esrb_id;
+
+    @Column(name ="author")
     private String author;
+    @Column(name = "Videogame_specs")
     private String specs;
+    @Column(name = "Videogame_price")
     private double price;
 
     public GameEntity() {

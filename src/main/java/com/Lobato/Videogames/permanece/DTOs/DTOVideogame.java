@@ -3,7 +3,7 @@ package com.Lobato.Videogames.permanece.DTOs;
 import java.util.List;
 
 public class DTOVideogame {
-
+    private Integer Id;
     private String name;
     private Integer esrbid;
     private String imgUrl;
@@ -13,7 +13,9 @@ public class DTOVideogame {
     private List<Integer> genres;
     private List<Integer> platforms;
 
-    public DTOVideogame(String name, Integer esrbid, String imgUrl, String author, String specs, double price, List<Integer> genres, List<Integer> platforms) {
+
+    public DTOVideogame(Integer id, String name, Integer esrbid, String imgUrl, String author, String specs, double price, List<Integer> genres, List<Integer> platforms) {
+        Id = id;
         this.name = name;
         this.esrbid = esrbid;
         this.imgUrl = imgUrl;
@@ -24,16 +26,12 @@ public class DTOVideogame {
         this.platforms = platforms;
     }
 
-    public void setEsrbid(Integer esrbid) {
-        this.esrbid = esrbid;
+    public Integer getId() {
+        return Id;
     }
 
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setId(Integer id) {
+        Id = id;
     }
 
     public String getName() {
@@ -44,11 +42,11 @@ public class DTOVideogame {
         this.name = name;
     }
 
-    public int getEsrbid() {
+    public Integer getEsrbid() {
         return esrbid;
     }
 
-    public void setEsrbid(int esrbid) {
+    public void setEsrbid(Integer esrbid) {
         this.esrbid = esrbid;
     }
 
@@ -59,16 +57,21 @@ public class DTOVideogame {
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
     }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
     public String getSpecs() {
         return specs;
     }
 
     public void setSpecs(String specs) {
         this.specs = specs;
-    }
-
-    public List<Integer> getGenres() {
-        return genres;
     }
 
     public double getPrice() {
@@ -79,7 +82,9 @@ public class DTOVideogame {
         this.price = price;
     }
 
-
+    public List<Integer> getGenres() {
+        return genres;
+    }
 
     public void setGenres(List<Integer> genres) {
         this.genres = genres;
@@ -92,6 +97,4 @@ public class DTOVideogame {
     public void setPlatforms(List<Integer> platforms) {
         this.platforms = platforms;
     }
-
-
 }

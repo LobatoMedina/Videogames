@@ -6,6 +6,7 @@ import com.Lobato.Videogames.permanece.Entities.EsrbEntity;
 import com.Lobato.Videogames.permanece.Entities.GenreEntity;
 import com.Lobato.Videogames.permanece.Entities.PlatformEntity;
 import org.apache.coyote.Response;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -14,7 +15,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.http.HttpResponse;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 
@@ -52,5 +59,10 @@ public class GameController {
     @PostMapping("/update")
     public boolean updateGame(Integer id){
         return true;
+    }
+    @GetMapping(value = "/image", produces = MediaType.IMAGE_JPEG_VALUE)
+    public @ResponseBody byte[] getImage() throws IOException {
+
+        return Files.readAllBytes(Path.of("uploads"));
     }
 }

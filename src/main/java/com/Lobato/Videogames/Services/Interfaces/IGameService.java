@@ -12,7 +12,12 @@ import java.util.Map;
 
 public interface IGameService {
     Integer addNewVideogame(VideoGameInDTO dtoVideogame, MultipartFile multipartFile) throws IOException;
-    void deleteVideogame(Integer id);
+    String deleteVideogame(Integer id);
+    String updateVideogame(DTOVideogame videogame, MultipartFile multipartFile);
+    DTOVideogame getVideoGameById(Integer id);
+    List<DTOVideogame> getAllVideogames();
+    List<Byte[]> getAllImage();
+    Byte[] getImageById(Integer id);
     void deletePlatformToVideogame(Integer platformId, Integer videogameId);
     void deleteGenreToVideogame(Integer genreId, Integer videogameId);
     List<EsrbDTO> getAllEsrb();

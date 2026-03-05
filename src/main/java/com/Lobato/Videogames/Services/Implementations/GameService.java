@@ -3,6 +3,7 @@ package com.Lobato.Videogames.Services.Implementations;
 
 import com.Lobato.Videogames.permanece.DTOs.*;
 import com.Lobato.Videogames.permanece.Entities.EsrbEntity;
+import com.Lobato.Videogames.permanece.Entities.GameEntity;
 import com.Lobato.Videogames.permanece.Entities.GenreEntity;
 import com.Lobato.Videogames.permanece.Entities.PlatformEntity;
 import com.Lobato.Videogames.permanece.Infraestructure.EsrbRepository;
@@ -16,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -24,7 +24,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class GameService implements IGameService {
@@ -75,12 +75,47 @@ public class GameService implements IGameService {
     }
 
     @Override
-    public void deleteVideogame(Integer id) {
+    public String deleteVideogame(Integer id) {
         try{
             gameInfraestructure.deleteVideogame(id);
+            return  "agregado correctamente";
         }catch (Exception e) {
-            throw new RuntimeException("error al eliminar un videojuego con la excepcion: " + e.getMessage());
+            return "error al eliminar"+ e.getMessage();
         }
+
+    }
+
+    @Override
+    public String updateVideogame(DTOVideogame videogame, MultipartFile multipartFile) {
+        return null;
+    }
+
+    @Override
+    public DTOVideogame getVideoGameById(Integer id) {
+        GameEntity esrb=gameInfraestructure.findById(id).get();
+        return new DTOVideogame(esrb.getId(),
+                esrb.getName(),
+                esrb.getEsrb_id(),
+                "url",
+                esrb.getAuthor(),
+                esrb.getSpecs(),
+                esrb.getPrice(),
+                null, null);
+    }
+
+    @Override
+    public List<DTOVideogame> getAllVideogames() {
+        return List.of();
+    }
+
+    @Override
+    public List<Byte[]> getAllImage() {
+        return List.of();
+    }
+
+    @Override
+    public Byte[] getImageById(Integer id) {
+        return new Byte[0];
     }
 
     @Override
