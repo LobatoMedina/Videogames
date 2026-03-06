@@ -40,7 +40,7 @@
                     <label for="specs">Especificaciones</label>
                     <textarea id="specs"></textarea>
                     <label for="precio">Precio</label>
-                    <input id="precio" type="number" min="0" max="10000">
+                    <input id="precio" type="number" min="0" max="10000" value="0">
                     <div class="useAllColumns">
                         <select id="genres">
                             <option selected disabled value="-1">generos</option>
@@ -50,6 +50,7 @@
 
                         </div>
                     </div>
+
                     <div class="useAllColumns">
                         <select id="platforms">
                             <option selected disabled value="-1">platafromas</option>
@@ -59,6 +60,10 @@
 
                         </div>
                     </div>
+                    <label for="stock">Stock</label>
+                    <input type="number" name="stock" id="stock">
+                    <label for="demo">Url del Video</label>
+                    <input type="text" id="demo" name="demo">
                     <input type="button" value="añadir juego" id="addGame" class="useAllColumns">
                 </div>
             </fieldset>
