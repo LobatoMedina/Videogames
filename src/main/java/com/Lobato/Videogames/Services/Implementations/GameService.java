@@ -93,6 +93,8 @@ public class GameService implements IGameService {
                 videogame.getAuthor(),
                 videogame.getSpecs(),
                 videogame.getPrice());
+        gameInfraestructure.removeGenre(videogame.getId());
+        gameInfraestructure.removePlatform(videogame.getId());
         if(videogame.getGenres() != null){
             for(GenreDTO id_genre : videogame.getGenres()){
                 gameInfraestructure.addNewGenre(videogame.getId(), id_genre.getId());
@@ -125,7 +127,7 @@ public class GameService implements IGameService {
         return new DTOVideogame(gve.getId(),
                 gve.getTitle(),
                 gve.getEsrb(),
-                gve.getImage_url(),
+               "https://localhost:8080/images/"+ gve.getImage_url(),
                 gve.getAuthor(),
                 gve.getSpecs(),
                 gve.getPrice(),
@@ -142,7 +144,7 @@ public class GameService implements IGameService {
             videogames.add(new DTOVideogame(tpmId,
                     game.getTitle(),
                     game.getEsrb(),
-                    game.getImage_url(),
+                    "https://localhost:8080/images/"+game.getImage_url(),
                     game.getAuthor(),
                     game.getSpecs(),
                     game.getPrice(),

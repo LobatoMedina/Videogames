@@ -74,16 +74,9 @@ public class GameController {
         return gameService.getAllVideogames();
     }
     @GetMapping("/getGame/{GameId}")
-    public DTOVideogame getUserById(@PathVariable("GameId") Integer id){
-        return gameService.getVideoGameById(id);
+    public DTOVideogame getUserById(@PathVariable("GameId") Integer GameId){
+        return gameService.getVideoGameById(GameId);
     }
-    @GetMapping(value = "/image", produces = MediaType.IMAGE_JPEG_VALUE)
-    public @ResponseBody byte[] getImage() throws IOException {
-        //This method would be in another class
-        //To do
-        return Files.readAllBytes(Path.of("uploads"));
-    }
-    //DTO methods
     @GetMapping("/genre")
     public List<GenreDTO> getAllGenres(){
         return gameService.getAllGenres();

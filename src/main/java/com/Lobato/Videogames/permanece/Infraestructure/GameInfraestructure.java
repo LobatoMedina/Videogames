@@ -31,16 +31,14 @@ public interface GameInfraestructure extends JpaRepository<GameEntity, Integer> 
                     Double price
     );
     @Procedure(procedureName = "sp_remove_genreToVideogame")
-    void removeGenre(@Param("_idVideogame") Integer gameId,
-                     @Param("_idGenre") Integer genre);
+    void removeGenre(@Param("_idVideogame") Integer gameId);
 
     @Procedure(procedureName = "sp_add_platformToGame")
     void addNewPlatform(@Param("_GameId") Integer gameId,
                         @Param("_platform") Integer platform);
 
     @Procedure(procedureName = "sp_remove_platform")
-    void removePlatform(@Param("_idVideogame") Integer gameId,
-                        @Param("_idPlatform") Integer platform);
+    void removePlatform(@Param("_idVideogame") Integer gameId);
 
     @Procedure(procedureName = "sp_delete_videogame")
     void deleteVideogame(@Param("_idVideogame") Integer id);
