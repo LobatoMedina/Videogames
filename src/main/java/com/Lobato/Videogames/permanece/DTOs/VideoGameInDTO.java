@@ -13,11 +13,12 @@ public class VideoGameInDTO {
     private double price;
     private List<Integer> genres;
     private List<Integer> platforms;
-
+    private Integer stock;
+    private String demo;
     public VideoGameInDTO() {
     }
 
-    public VideoGameInDTO(String name, Integer esrbid, String author, String specs, double price, List<Integer> genres, List<Integer> platforms) {
+    public VideoGameInDTO(String name, Integer esrbid, String author, String specs, double price, List<Integer> genres, List<Integer> platforms, Integer stock, String demo) {
         this.name = name;
         this.esrbid = esrbid;
         this.author = author;
@@ -25,6 +26,8 @@ public class VideoGameInDTO {
         this.price = price;
         this.genres = genres;
         this.platforms = platforms;
+        this.stock = stock;
+        this.demo = demo;
     }
 
     public String getName() {
@@ -81,5 +84,21 @@ public class VideoGameInDTO {
 
     public void setPlatforms(List<Integer> platforms) {
         this.platforms = platforms;
+    }
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
+    }
+
+    public String getDemo() {
+        return demo;
+    }
+
+    public void setDemo(String demo) {
+        this.demo = demo;
     }
 }

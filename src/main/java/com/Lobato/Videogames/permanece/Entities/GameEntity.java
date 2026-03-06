@@ -11,7 +11,9 @@ import jakarta.persistence.*;
         @StoredProcedureParameter(name = "_author", mode = ParameterMode.IN, type = String.class),
         @StoredProcedureParameter(name = "_specs", mode = ParameterMode.IN, type = String.class),
         @StoredProcedureParameter(name = "_price", mode = ParameterMode.IN, type = Double.class),
-        @StoredProcedureParameter(name = "_id", mode = ParameterMode.OUT, type = Integer.class)
+        @StoredProcedureParameter(name = "_id", mode = ParameterMode.OUT, type = Integer.class),
+        @StoredProcedureParameter(name = "_stock", mode = ParameterMode.IN, type = Integer.class),
+        @StoredProcedureParameter(name = "_demo", mode = ParameterMode.IN, type = String.class)
 })
 @NamedStoredProcedureQuery(name = "get_url_image", procedureName = "sp_returnImageName_byGameId", parameters = {
         @StoredProcedureParameter(name = "_gameId", mode =  ParameterMode.IN, type = Integer.class),
@@ -24,7 +26,9 @@ import jakarta.persistence.*;
         @StoredProcedureParameter(name = "_urlImage", mode = ParameterMode.IN, type = String.class),
         @StoredProcedureParameter(name = "_author", mode = ParameterMode.IN, type = String.class),
         @StoredProcedureParameter(name = "_specs", mode = ParameterMode.IN, type = String.class),
-        @StoredProcedureParameter(name = "_price", mode = ParameterMode.IN, type = Double.class)
+        @StoredProcedureParameter(name = "_price", mode = ParameterMode.IN, type = Double.class),
+        @StoredProcedureParameter(name = "_stock", mode = ParameterMode.IN, type = Integer.class),
+        @StoredProcedureParameter(name = "_demo", mode = ParameterMode.IN, type = String.class)
 })
 @Entity
 @Table(name = "tbl_ope_videogames")
@@ -44,19 +48,10 @@ public class GameEntity {
     private String specs;
     @Column(name = "Videogame_price")
     private double price;
-
-    public GameEntity() {
-    }
-
-    public GameEntity(Integer id, String name, int esrb_id, String author, String specs, double price) {
-        this.id = id;
-        this.name = name;
-        this.esrb_id = esrb_id;
-        this.author = author;
-        this.specs = specs;
-        this.price = price;
-    }
-
+    @Column(name = "Videogame_Stock")
+    private Integer stock;
+    @Column(name ="Videogame_Demo")
+    private String demo;
     public Integer getId() {
         return id;
     }

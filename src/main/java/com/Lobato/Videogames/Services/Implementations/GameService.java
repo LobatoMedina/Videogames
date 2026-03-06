@@ -48,7 +48,9 @@ public class GameService implements IGameService {
                 fileName,
                 dtoVideogame.getAuthor(),
                 dtoVideogame.getSpecs(),
-                dtoVideogame.getPrice()
+                dtoVideogame.getPrice(),
+                dtoVideogame.getStock(),
+                dtoVideogame.getDemo()
                 );
         if(dtoVideogame.getGenres() != null){
             for(Integer id_genre : dtoVideogame.getGenres()){
@@ -92,7 +94,9 @@ public class GameService implements IGameService {
                 fileName,
                 videogame.getAuthor(),
                 videogame.getSpecs(),
-                videogame.getPrice());
+                videogame.getPrice(),
+                videogame.getStock(),
+                videogame.getDemo());
         gameInfraestructure.removeGenre(videogame.getId());
         gameInfraestructure.removePlatform(videogame.getId());
         if(videogame.getGenres() != null){
@@ -132,7 +136,9 @@ public class GameService implements IGameService {
                 gve.getSpecs(),
                 gve.getPrice(),
                 genreRepository.getAllGenresFromGame(id).stream().map(GenreDTO::new).collect(Collectors.toList()),
-                platformRepository.getAllPlatformsById(id).stream().map(PlatformDTO::new).collect(Collectors.toList())
+                platformRepository.getAllPlatformsById(id).stream().map(PlatformDTO::new).collect(Collectors.toList()),
+                gve.getVideogames_stock(),
+                gve.getVideogames_Demo()
                 );
     }
 
@@ -149,7 +155,9 @@ public class GameService implements IGameService {
                     game.getSpecs(),
                     game.getPrice(),
                     genreRepository.getAllGenresFromGame(tpmId).stream().map(GenreDTO::new).collect(Collectors.toList()),
-                    platformRepository.getAllPlatformsById(tpmId).stream().map(PlatformDTO::new).collect(Collectors.toList())
+                    platformRepository.getAllPlatformsById(tpmId).stream().map(PlatformDTO::new).collect(Collectors.toList()),
+                    game.getVideogames_stock(),
+                    game.getVideogames_Demo()
             ));
         }
 
