@@ -41,17 +41,7 @@ public class GameService implements IGameService {
     @Transactional
     @Override
     public Integer addNewVideogame(VideoGameInDTO dtoVideogame, MultipartFile file) throws IOException {
-        String contentType = file.getContentType();
-        if (contentType == null || !ALLOWED_TYPES.contains(contentType)) {
-            throw new IOException("Formato de archivo no permitido. Solo se aceptan JPG, PNG y WEBP.");
-        }
-        if (!Files.exists(root)) {
-            Files.createDirectories(root);
-        }
-        String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
-        String fileName = LocalTime.now() + "."+ extension ;
-
-        Files.copy(file.getInputStream(), this.root.resolve(fileName));
+        String fileName = insertImage(file);
         Integer id_game= gameInfraestructure.addNewGame(
                 dtoVideogame.getName(),
                 dtoVideogame.getEsrbid(),
@@ -77,7 +67,7 @@ public class GameService implements IGameService {
     public String deleteVideogame(Integer id) {
         try{
             gameInfraestructure.deleteVideogame(id);
-            return  "agregado correctamente";
+            return  "eliminado correctamente";
         }catch (Exception e) {
             return "error al eliminar"+ e.getMessage();
         }
@@ -85,12 +75,50 @@ public class GameService implements IGameService {
     }
 
     @Override
-    public String updateVideogame(VideoGameInDTO videogame, MultipartFile multipartFile) {
-        // to do
-        return null;
+    public String updateVideogame(DTOVideogame videogame, MultipartFile multipartFile) throws IOException {
+        //Hola yo del futuro
+        // Elimina la imagen buscandolo con el id
+        try {
+            Path file = root.resolve(gameInfraestructure.getUrlImage(videogame.getId()));
+            Files.deleteIfExists(file);
+        } catch (IOException e) {
+            throw new RuntimeException("No se pudo eliminar el archivo: " + e.getMessage());
+        }
+        //ahora si, añade la nueva imagen aplicando el mismo formato
+        String fileName = insertImage(multipartFile);
+        gameInfraestructure.updateGame(videogame.getId(),
+                videogame.getName(),
+                videogame.getEsrbid(),
+                fileName,
+                videogame.getAuthor(),
+                videogame.getSpecs(),
+                videogame.getPrice());
+        if(videogame.getGenres() != null){
+            for(GenreDTO id_genre : videogame.getGenres()){
+                gameInfraestructure.addNewGenre(videogame.getId(), id_genre.getId());
+            }
+        }
+        if(videogame.getPlatforms() != null){
+            for(PlatformDTO id_platform : videogame.getPlatforms()){
+                gameInfraestructure.addNewPlatform(videogame.getId(), id_platform.getId());
+            }
+        }
+        return "Juego actualizado";
 
     }
-
+    public String insertImage(MultipartFile multipartFile) throws IOException {
+        String contentType = multipartFile.getContentType();
+        if (contentType == null || !ALLOWED_TYPES.contains(contentType)) {
+            throw new IOException("Formato de archivo no permitido. Solo se aceptan JPG, PNG y WEBP.");
+        }
+        if (!Files.exists(root)) {
+            Files.createDirectories(root);
+        }
+        String extension = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."));
+        String fileName = LocalTime.now() + "."+ extension ;
+        Files.copy(multipartFile.getInputStream(), this.root.resolve(fileName));
+        return  fileName;
+    }
     @Override
     public DTOVideogame getVideoGameById(Integer id) {
         GameViewEntity gve = gameViewRepo.getReferenceById(id);

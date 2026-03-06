@@ -16,10 +16,20 @@ public interface GameInfraestructure extends JpaRepository<GameEntity, Integer> 
             @Param("_price") double price
 
     );
+    @Procedure (name = "get_url_image", outputParameterName = "_urlImage")
+    String getUrlImage(@Param("_gameId") Integer id);
     @Procedure(procedureName = "sp_add_genreToMovie")
     void addNewGenre(@Param("_GameId") Integer gameId,
                      @Param("_genreId") Integer genre);
-
+    @Procedure(name = "update_game")
+    void updateGame(@Param("_videogameId") Integer id,
+                    String name,
+                    Integer esrb_id,
+                    String image,
+                    String author,
+                    String specs,
+                    Double price
+    );
     @Procedure(procedureName = "sp_remove_genreToVideogame")
     void removeGenre(@Param("_idVideogame") Integer gameId,
                      @Param("_idGenre") Integer genre);
