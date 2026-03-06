@@ -87,7 +87,9 @@ public class GameService implements IGameService {
 
     @Override
     public String updateVideogame(DTOVideogame videogame, MultipartFile multipartFile) {
+        // to do
         return null;
+
     }
 
     @Override
@@ -105,17 +107,8 @@ public class GameService implements IGameService {
 
     @Override
     public List<DTOVideogame> getAllVideogames() {
+        // to do
         return List.of();
-    }
-
-    @Override
-    public List<Byte[]> getAllImage() {
-        return List.of();
-    }
-
-    @Override
-    public Byte[] getImageById(Integer id) {
-        return new Byte[0];
     }
 
     @Override

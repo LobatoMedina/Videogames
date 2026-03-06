@@ -13,6 +13,6 @@ import java.util.Map;
 import java.util.Optional;
 
 @Repository
-public interface  GenreRepository extends CrudRepository<GenreEntity, Integer> {
+public interface  GenreRepository extends JpaRepository<GenreEntity, Integer> {
 
 }

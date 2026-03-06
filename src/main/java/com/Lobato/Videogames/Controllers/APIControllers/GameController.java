@@ -43,6 +43,47 @@ public class GameController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PostMapping("/update")
+    public ResponseEntity<String> updateGame(
+            @RequestPart DTOVideogame videogame,
+            @RequestPart MultipartFile file){
+        try{
+            gameService.updateVideogame(
+                    videogame, file
+            );
+            return ResponseEntity.ok().body("Agregado Exitosamente");
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body("Error al actualizar" + e.getMessage());
+        }
+
+    }
+    @PostMapping("/delete")
+    public ResponseEntity<String> deleteGameById(
+            @RequestParam Integer id){
+        try{
+            gameService.deleteVideogame(id);
+            return ResponseEntity.ok().body("Se ha eliminado exitosamente");
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body("error al eliminar ese usuario" + e.getMessage());
+        }
+    }
+    @GetMapping("/getGames")
+    public List<DTOVideogame> getAllVideogames(){
+        return gameService.getAllVideogames();
+    }
+    @GetMapping("/getGame/{GameId}")
+    public DTOVideogame getUserById(@PathVariable("GameId") Integer id){
+        return gameService.getVideoGameById(id);
+    }
+    @GetMapping(value = "/image", produces = MediaType.IMAGE_JPEG_VALUE)
+    public @ResponseBody byte[] getImage() throws IOException {
+        //This method would be in another class
+        //To do
+        return Files.readAllBytes(Path.of("uploads"));
+    }
+    //DTO methods
     @GetMapping("/genre")
     public List<GenreDTO> getAllGenres(){
         return gameService.getAllGenres();
@@ -55,13 +96,7 @@ public class GameController {
     public List<EsrbDTO> getAllEsrb(){
         return gameService.getAllEsrb();
     }
-    @PostMapping("/update")
-    public boolean updateGame(Integer id){
-        return true;
-    }
-    @GetMapping(value = "/image", produces = MediaType.IMAGE_JPEG_VALUE)
-    public @ResponseBody byte[] getImage() throws IOException {
 
-        return Files.readAllBytes(Path.of("uploads"));
-    }
+
+
 }
