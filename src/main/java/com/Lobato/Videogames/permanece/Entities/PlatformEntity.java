@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tbl_cat_platforms")
+@NamedStoredProcedureQuery(name = "find_platforms", procedureName = "sp_findAllPlatforms_fromVideogame", parameters = {
+        @StoredProcedureParameter(name = "_gameId", mode = ParameterMode.IN,type = Integer.class)
+}, resultClasses = PlatformEntity.class)
 public class PlatformEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

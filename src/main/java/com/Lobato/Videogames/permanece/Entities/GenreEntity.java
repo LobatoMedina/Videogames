@@ -3,9 +3,14 @@ package com.Lobato.Videogames.permanece.Entities;
 
 import com.Lobato.Videogames.permanece.DTOs.GenreDTO;
 import jakarta.persistence.*;
+import org.springframework.data.jpa.repository.query.Procedure;
 
 @Entity
 @Table(name = "tbl_cat_genres")
+@NamedStoredProcedureQuery(name = "get_genres", procedureName = "sp_findAllGenres_FromVideogame", parameters = {
+        @StoredProcedureParameter(name = "_gameId",mode = ParameterMode.IN, type = Integer.class)
+
+}, resultClasses = GenreEntity.class)
 public class GenreEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

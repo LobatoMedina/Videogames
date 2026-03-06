@@ -10,11 +10,10 @@ public class DTOVideogame {
     public String author;
     private String specs;
     private double price;
-    private List<Integer> genres;
-    private List<Integer> platforms;
+    private List<GenreDTO> genres;
+    private List<PlatformDTO> platforms;
 
-
-    public DTOVideogame(Integer id, String name, Integer esrbid, String imgUrl, String author, String specs, double price, List<Integer> genres, List<Integer> platforms) {
+    public DTOVideogame(Integer id, String name, Integer esrbid, String imgUrl, String author, String specs, double price, List<GenreDTO> genres, List<PlatformDTO> platforms) {
         Id = id;
         this.name = name;
         this.esrbid = esrbid;
@@ -82,19 +81,19 @@ public class DTOVideogame {
         this.price = price;
     }
 
-    public List<Integer> getGenres() {
+    public List<GenreDTO> getGenres() {
         return genres;
     }
 
-    public void setGenres(List<Integer> genres) {
+    public void setGenres(List<GenreDTO> genres) {
         this.genres = genres;
     }
 
-    public List<Integer> getPlatforms() {
+    public List<PlatformDTO> getPlatforms() {
         return platforms;
     }
 
-    public void setPlatforms(List<Integer> platforms) {
+    public void setPlatforms(List<PlatformDTO> platforms) {
         this.platforms = platforms;
     }
 }

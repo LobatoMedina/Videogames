@@ -1,10 +1,14 @@
 package com.Lobato.Videogames.permanece.DTOs;
 
+import com.Lobato.Videogames.permanece.Entities.GenreEntity;
+
 public class GenreDTO {
     private Integer id;
     private String name;
 
-    public GenreDTO() {
+    public GenreDTO(GenreEntity ge) {
+        this.id = ge.getId();
+        this.name = getName();
     }
 
     public GenreDTO(Integer id, String name) {

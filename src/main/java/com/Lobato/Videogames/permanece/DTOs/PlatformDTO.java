@@ -1,16 +1,17 @@
 package com.Lobato.Videogames.permanece.DTOs;
 
+import com.Lobato.Videogames.permanece.Entities.PlatformEntity;
+
 public class PlatformDTO {
     private Integer id;
     private String name;
 
-    public PlatformDTO() {
+    public PlatformDTO(PlatformEntity pe) {
+        this.id = pe.getPlatformId();
+        this.name = pe.getPlatform_platform();
     }
 
-    public PlatformDTO(Integer id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+
 
     public Integer getId() {
         return id;

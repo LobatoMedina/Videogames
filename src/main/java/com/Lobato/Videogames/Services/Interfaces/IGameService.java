@@ -13,7 +13,7 @@ import java.util.Map;
 public interface IGameService {
     Integer addNewVideogame(VideoGameInDTO dtoVideogame, MultipartFile multipartFile) throws IOException;
     String deleteVideogame(Integer id);
-    String updateVideogame(DTOVideogame videogame, MultipartFile multipartFile);
+    String updateVideogame(VideoGameInDTO videogame, MultipartFile multipartFile);
     DTOVideogame getVideoGameById(Integer id);
     List<DTOVideogame> getAllVideogames();
     List<EsrbDTO> getAllEsrb();

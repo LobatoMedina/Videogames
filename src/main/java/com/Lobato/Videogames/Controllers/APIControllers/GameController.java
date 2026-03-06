@@ -46,7 +46,7 @@ public class GameController {
 
     @PostMapping("/update")
     public ResponseEntity<String> updateGame(
-            @RequestPart DTOVideogame videogame,
+            @RequestPart VideoGameInDTO videogame,
             @RequestPart MultipartFile file){
         try{
             gameService.updateVideogame(

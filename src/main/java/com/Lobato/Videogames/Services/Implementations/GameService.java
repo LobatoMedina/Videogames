@@ -2,10 +2,7 @@ package com.Lobato.Videogames.Services.Implementations;
 
 
 import com.Lobato.Videogames.permanece.DTOs.*;
-import com.Lobato.Videogames.permanece.Entities.EsrbEntity;
-import com.Lobato.Videogames.permanece.Entities.GameEntity;
-import com.Lobato.Videogames.permanece.Entities.GenreEntity;
-import com.Lobato.Videogames.permanece.Entities.PlatformEntity;
+import com.Lobato.Videogames.permanece.Entities.*;
 import com.Lobato.Videogames.permanece.Infraestructure.*;
 import com.Lobato.Videogames.Services.Interfaces.IGameService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class GameService implements IGameService {
@@ -87,7 +85,7 @@ public class GameService implements IGameService {
     }
 
     @Override
-    public String updateVideogame(DTOVideogame videogame, MultipartFile multipartFile) {
+    public String updateVideogame(VideoGameInDTO videogame, MultipartFile multipartFile) {
         // to do
         return null;
 
@@ -95,30 +93,33 @@ public class GameService implements IGameService {
 
     @Override
     public DTOVideogame getVideoGameById(Integer id) {
-        GameEntity esrb=gameInfraestructure.findById(id).get();
-        return new DTOVideogame(esrb.getId(),
-                esrb.getName(),
-                esrb.getEsrb_id(),
-                "url",
-                esrb.getAuthor(),
-                esrb.getSpecs(),
-                esrb.getPrice(),
-                null, null);
+        GameViewEntity gve = gameViewRepo.getReferenceById(id);
+        return new DTOVideogame(gve.getId(),
+                gve.getTitle(),
+                gve.getEsrb(),
+                gve.getImage_url(),
+                gve.getAuthor(),
+                gve.getSpecs(),
+                gve.getPrice(),
+                genreRepository.getAllGenresFromGame(id).stream().map(GenreDTO::new).collect(Collectors.toList()),
+                platformRepository.getAllPlatformsById(id).stream().map(PlatformDTO::new).collect(Collectors.toList())
+                );
     }
 
     @Override
     public List<DTOVideogame> getAllVideogames() {
-        // to do
         List<DTOVideogame> videogames = new ArrayList<>();
         for(var game : gameViewRepo.findAll()){
-            videogames.add(new DTOVideogame(game.getId(),
+            int tpmId= game.getId();
+            videogames.add(new DTOVideogame(tpmId,
                     game.getTitle(),
                     game.getEsrb(),
                     game.getImage_url(),
                     game.getAuthor(),
                     game.getSpecs(),
                     game.getPrice(),
-                    null, null
+                    genreRepository.getAllGenresFromGame(tpmId).stream().map(GenreDTO::new).collect(Collectors.toList()),
+                    platformRepository.getAllPlatformsById(tpmId).stream().map(PlatformDTO::new).collect(Collectors.toList())
             ));
         }
 
@@ -127,15 +128,11 @@ public class GameService implements IGameService {
 
 
     @Override
+    @Transactional
     public List<EsrbDTO> getAllEsrb() {
-        List<EsrbDTO> lista = new ArrayList<>();
+        List<EsrbDTO> lista;
         try{
-            Iterable<EsrbEntity> data = esrbRepository.findAll();
-            for (var element : data){
-                lista.add(new EsrbDTO(
-                        element.getId(), element.getEsrb_esrb(), element.getEsrb_LimitAge()
-                ));
-            }
+            lista = esrbRepository.findAll().stream().map(EsrbDTO::new).collect(Collectors.toList());
         }catch (Exception e){
             throw new RuntimeException("Mi bombo"+ e.getMessage());
         }
@@ -149,12 +146,7 @@ public class GameService implements IGameService {
         List<GenreDTO> lista = new ArrayList<>();
 
         try{
-            Iterable<GenreEntity> data = genreRepository.findAll();
-            for (var element : data){
-                lista.add(new GenreDTO(
-                    element.getId(), element.getGenre()
-                ));
-            }
+            lista = genreRepository.findAll().stream().map(GenreDTO::new).collect(Collectors.toList());
         }catch (Exception e){
             throw new RuntimeException("Mi bombo"+ e.getMessage());
         }
@@ -166,12 +158,8 @@ public class GameService implements IGameService {
     public List<PlatformDTO> getAllPlatforms() {
         List<PlatformDTO> lista = new ArrayList<>();
         try{
-            Iterable<PlatformEntity> data = platformRepository.findAll();
-            for (var element : data){
-                lista.add(new PlatformDTO(
-                        element.getPlatformId(), element.getPlatform_platform()
-                ));
-            }       }catch (Exception e){
+            lista = platformRepository.findAll().stream().map(PlatformDTO::new).collect(Collectors.toList());
+        }catch (Exception e){
             throw new RuntimeException("Mi bombo"+ e.getMessage());
         }
 

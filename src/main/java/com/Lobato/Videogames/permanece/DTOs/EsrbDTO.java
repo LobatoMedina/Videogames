@@ -1,17 +1,16 @@
 package com.Lobato.Videogames.permanece.DTOs;
 
+import com.Lobato.Videogames.permanece.Entities.EsrbEntity;
+
 public class EsrbDTO {
     private Integer id;
     private String name;
     private Integer EdadMin;
 
-    public EsrbDTO() {
-    }
-
-    public EsrbDTO(Integer id, String name, Integer edadMin) {
-        this.id = id;
-        this.name = name;
-        EdadMin = edadMin;
+    public EsrbDTO(EsrbEntity esrbEntity) {
+        this.id = esrbEntity.getId();
+        this.name = esrbEntity.getEsrb_esrb();
+        this.EdadMin = esrbEntity.getEsrb_LimitAge();
     }
 
     public Integer getId() {
