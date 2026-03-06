@@ -16,8 +16,6 @@ public interface IGameService {
     String updateVideogame(DTOVideogame videogame, MultipartFile multipartFile);
     DTOVideogame getVideoGameById(Integer id);
     List<DTOVideogame> getAllVideogames();
-    void deletePlatformToVideogame(Integer platformId, Integer videogameId);
-    void deleteGenreToVideogame(Integer genreId, Integer videogameId);
     List<EsrbDTO> getAllEsrb();
     List<GenreDTO> getAllGenres();
     List<PlatformDTO> getAllPlatforms();

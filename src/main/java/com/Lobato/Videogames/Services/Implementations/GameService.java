@@ -6,11 +6,8 @@ import com.Lobato.Videogames.permanece.Entities.EsrbEntity;
 import com.Lobato.Videogames.permanece.Entities.GameEntity;
 import com.Lobato.Videogames.permanece.Entities.GenreEntity;
 import com.Lobato.Videogames.permanece.Entities.PlatformEntity;
-import com.Lobato.Videogames.permanece.Infraestructure.EsrbRepository;
-import com.Lobato.Videogames.permanece.Infraestructure.GameInfraestructure;
+import com.Lobato.Videogames.permanece.Infraestructure.*;
 import com.Lobato.Videogames.Services.Interfaces.IGameService;
-import com.Lobato.Videogames.permanece.Infraestructure.GenreRepository;
-import com.Lobato.Videogames.permanece.Infraestructure.PlatformRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,8 +34,12 @@ public class GameService implements IGameService {
     private PlatformRepository platformRepository;
     @Autowired
     private GameInfraestructure gameInfraestructure;
+    @Autowired
+    private GameViewRepo gameViewRepo;
+
     private final Path root = Paths.get("uploads");
     private static final List<String> ALLOWED_TYPES = Arrays.asList("image/jpeg", "image/png", "image/webp");
+
     @Transactional
     @Override
     public Integer addNewVideogame(VideoGameInDTO dtoVideogame, MultipartFile file) throws IOException {
@@ -108,26 +109,22 @@ public class GameService implements IGameService {
     @Override
     public List<DTOVideogame> getAllVideogames() {
         // to do
-        return List.of();
+        List<DTOVideogame> videogames = new ArrayList<>();
+        for(var game : gameViewRepo.findAll()){
+            videogames.add(new DTOVideogame(game.getId(),
+                    game.getTitle(),
+                    game.getEsrb(),
+                    game.getImage_url(),
+                    game.getAuthor(),
+                    game.getSpecs(),
+                    game.getPrice(),
+                    null, null
+            ));
+        }
+
+        return videogames;
     }
 
-    @Override
-    public void deletePlatformToVideogame(Integer platformId, Integer videogameId) {
-        try{
-            gameInfraestructure.removePlatform(videogameId,platformId);
-        } catch (RuntimeException e) {
-            throw new RuntimeException("Error al eliminar una plataforma "+e.getMessage());
-        }
-    }
-
-    @Override
-    public void deleteGenreToVideogame(Integer genreId, Integer videogameId) {
-        try{
-            gameInfraestructure.removeGenre(videogameId,genreId);
-        } catch (RuntimeException e) {
-            throw new RuntimeException("Error al eliminar un genero de un videojuego "+e.getMessage());
-        }
-    }
 
     @Override
     public List<EsrbDTO> getAllEsrb() {

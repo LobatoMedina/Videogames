@@ -7,65 +7,85 @@ import jakarta.persistence.*;
 public class GameViewEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer VideogameId;
-    private String Videogame_videogame;
-    private Integer esrb_id;
-    private String images_url;
-    private String Videogames_author;
+    private Integer Id;
+    private String title;
+    private Integer esrb;
+    private String image_url;
+    private String author;
+    private String specs;
+    private double price;
     private Integer Videogames_stock;
     private String Videogames_Demo;
 
     public GameViewEntity() {
     }
 
-    public GameViewEntity(Integer videogameId, String videogame_videogame, Integer esrb_id, String images_url, String videogames_author, Integer videogames_stock, String videogames_Demo) {
-        VideogameId = videogameId;
-        Videogame_videogame = videogame_videogame;
-        this.esrb_id = esrb_id;
-        this.images_url = images_url;
-        Videogames_author = videogames_author;
+    public GameViewEntity(Integer id, String title, Integer esrb, String image_url, String author, String specs, double price, Integer videogames_stock, String videogames_Demo) {
+        Id = id;
+        this.title = title;
+        this.esrb = esrb;
+        this.image_url = image_url;
+        this.author = author;
+        this.specs = specs;
+        this.price = price;
         Videogames_stock = videogames_stock;
         Videogames_Demo = videogames_Demo;
     }
 
-    public Integer getVideogameId() {
-        return VideogameId;
+    public Integer getId() {
+        return Id;
     }
 
-    public void setVideogameId(Integer videogameId) {
-        VideogameId = videogameId;
+    public void setId(Integer id) {
+        Id = id;
     }
 
-    public String getVideogame_videogame() {
-        return Videogame_videogame;
+    public String getTitle() {
+        return title;
     }
 
-    public void setVideogame_videogame(String videogame_videogame) {
-        Videogame_videogame = videogame_videogame;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public Integer getEsrb_id() {
-        return esrb_id;
+    public Integer getEsrb() {
+        return esrb;
     }
 
-    public void setEsrb_id(Integer esrb_id) {
-        this.esrb_id = esrb_id;
+    public void setEsrb(Integer esrb) {
+        this.esrb = esrb;
     }
 
-    public String getImages_url() {
-        return images_url;
+    public String getImage_url() {
+        return image_url;
     }
 
-    public void setImages_url(String images_url) {
-        this.images_url = images_url;
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
     }
 
-    public String getVideogames_author() {
-        return Videogames_author;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setVideogames_author(String videogames_author) {
-        Videogames_author = videogames_author;
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getSpecs() {
+        return specs;
+    }
+
+    public void setSpecs(String specs) {
+        this.specs = specs;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public Integer getVideogames_stock() {
