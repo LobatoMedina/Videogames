@@ -92,7 +92,7 @@ const createOptionElement = (value, name, parent) =>{
     parent.appendChild(option);
 }
 const fetchAllGames = async ()=>{
-    const response = await fetch("http://localhost:8080/api/gamesgetGames",{
+    const response = await fetch("http://localhost:8080/api/game/getGames",{
         headers: {
             'Content-Type': 'application/json; charset=UTF-8' 
         }
@@ -100,7 +100,7 @@ const fetchAllGames = async ()=>{
     if(!response.ok){
         printInfo("Error del servidor, no se pudieron cargar los datos", INFOSTATES.DANGEROUS);
     }else{
-        tmp = response.json();
+        tmp = await response.json()
         tmp.forEach(element =>{
             createCardsElements(element)
         })
@@ -124,7 +124,7 @@ const createCardsElements= element=>{
     card_body.appendChild(createTag("Categoria:", element.esrbDTO.name));
     card_body.appendChild(createBodyElements("Generos",element.genres))
     card_body.appendChild(createBodyElements("Plataformas",element.platforms))
-    card_body.appendChild(createTag(Specs, element.specs));
+    card_body.appendChild(createTag("Specs", element.specs));
     card_body.appendChild(createTag("price",element.price));
     card_body.appendChild(createTag("stock",element.stock));
     const a = document.createElement("A");
@@ -161,10 +161,12 @@ const createTag= (text, value)=>{
     return p;
 }
 const createButton = (title, e) =>{
-    const btn = document.createElement("button").innerHTML = title;
+    const btn = document.createElement("button")
+    btn.innerHTML = title;
     btn.addEventListener("click", ()=>{
         e();
     })
+    return btn;
 }
 const validateTransparency = ()=>{
         if(scrollY >= 50){
