@@ -126,11 +126,12 @@ public class GameService implements IGameService {
         return  fileName;
     }
     @Override
+    @Transactional
     public DTOVideogame getVideoGameById(Integer id) {
         GameViewEntity gve = gameViewRepo.getReferenceById(id);
         return new DTOVideogame(gve.getId(),
                 gve.getTitle(),
-                (EsrbDTO) esrbRepository.findById(id).stream().map(EsrbDTO::new),
+                esrbRepository.findById(gve.getEsrb()).map(EsrbDTO::new).orElse(null),
                "https://localhost:8080/images/"+ gve.getImage_url(),
                 gve.getAuthor(),
                 gve.getSpecs(),
@@ -143,13 +144,14 @@ public class GameService implements IGameService {
     }
 
     @Override
+    @Transactional
     public List<DTOVideogame> getAllVideogames() {
         List<DTOVideogame> videogames = new ArrayList<>();
         for(var game : gameViewRepo.findAll()){
             int tpmId= game.getId();
             videogames.add(new DTOVideogame(tpmId,
                     game.getTitle(),
-                    (EsrbDTO) esrbRepository.findById(tpmId).stream().map(EsrbDTO::new),
+                    esrbRepository.findById(game.getEsrb()).map(EsrbDTO::new).orElse(null),
                     "https://localhost:8080/images/"+game.getImage_url(),
                     game.getAuthor(),
                     game.getSpecs(),
@@ -193,6 +195,7 @@ public class GameService implements IGameService {
     }
 
     @Override
+    @Transactional
     public List<PlatformDTO> getAllPlatforms() {
         List<PlatformDTO> lista = new ArrayList<>();
         try{
