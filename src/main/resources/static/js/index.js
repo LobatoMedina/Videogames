@@ -305,7 +305,7 @@ const validateValues = ()=>{
     }
     return true;
 }
-const printInfo = (msg = "esto es un mensaje", state = INFOSTATES.INFORMATIVE)=>{
+const printInfo = (msg = "esto es u", state = INFOSTATES.INFORMATIVE)=>{
     info.innerHTML= "";
     info.className = "";
     switch(state){
