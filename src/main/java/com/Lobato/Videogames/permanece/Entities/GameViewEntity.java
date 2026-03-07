@@ -14,13 +14,13 @@ public class GameViewEntity {
     private String author;
     private String specs;
     private double price;
-    private Integer Videogames_stock;
-    private String Videogames_Demo;
+    private Integer Videogame_stock;
+    private String Videogame_Demo;
 
     public GameViewEntity() {
     }
 
-    public GameViewEntity(Integer id, String title, Integer esrb, String image_url, String author, String specs, double price, Integer videogames_stock, String videogames_Demo) {
+    public GameViewEntity(Integer id, String title, Integer esrb, String image_url, String author, String specs, double price, Integer videogame_stock, String videogame_Demo) {
         Id = id;
         this.title = title;
         this.esrb = esrb;
@@ -28,8 +28,8 @@ public class GameViewEntity {
         this.author = author;
         this.specs = specs;
         this.price = price;
-        Videogames_stock = videogames_stock;
-        Videogames_Demo = videogames_Demo;
+        Videogame_stock = videogame_stock;
+        Videogame_Demo = videogame_Demo;
     }
 
     public Integer getId() {
@@ -88,19 +88,19 @@ public class GameViewEntity {
         this.price = price;
     }
 
-    public Integer getVideogames_stock() {
-        return Videogames_stock;
+    public Integer getVideogame_stock() {
+        return Videogame_stock;
     }
 
-    public void setVideogames_stock(Integer videogames_stock) {
-        Videogames_stock = videogames_stock;
+    public void setVideogame_stock(Integer videogame_stock) {
+        Videogame_stock = videogame_stock;
     }
 
-    public String getVideogames_Demo() {
-        return Videogames_Demo;
+    public String getVideogame_Demo() {
+        return Videogame_Demo;
     }
 
-    public void setVideogames_Demo(String videogames_Demo) {
-        Videogames_Demo = videogames_Demo;
+    public void setVideogame_Demo(String videogame_Demo) {
+        Videogame_Demo = videogame_Demo;
     }
 }

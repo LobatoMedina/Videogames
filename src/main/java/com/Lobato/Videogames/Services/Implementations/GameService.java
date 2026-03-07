@@ -137,8 +137,8 @@ public class GameService implements IGameService {
                 gve.getPrice(),
                 genreRepository.getAllGenresFromGame(id).stream().map(GenreDTO::new).collect(Collectors.toList()),
                 platformRepository.getAllPlatformsById(id).stream().map(PlatformDTO::new).collect(Collectors.toList()),
-                gve.getVideogames_stock(),
-                gve.getVideogames_Demo()
+                gve.getVideogame_stock(),
+                gve.getVideogame_Demo()
                 );
     }
 
@@ -156,8 +156,8 @@ public class GameService implements IGameService {
                     game.getPrice(),
                     genreRepository.getAllGenresFromGame(tpmId).stream().map(GenreDTO::new).collect(Collectors.toList()),
                     platformRepository.getAllPlatformsById(tpmId).stream().map(PlatformDTO::new).collect(Collectors.toList()),
-                    game.getVideogames_stock(),
-                    game.getVideogames_Demo()
+                    game.getVideogame_stock(),
+                    game.getVideogame_Demo()
             ));
         }
 

@@ -92,7 +92,7 @@ const createOptionElement = (value, name, parent) =>{
     parent.appendChild(option);
 }
 const fetchAllGames = async ()=>{
-    const response = await fetch("http://localhost:8080/api/getGames",{
+    const response = await fetch("http://localhost:8080/api/game/getGames",{
         headers: {
             'Content-Type': 'application/json; charset=UTF-8' 
         }
@@ -204,22 +204,22 @@ const printInfo = (msg = "", state = INFOSTATES.INFORMATIVE)=>{
     switch(state){
         case INFOSTATES.DANGEROUS:
             info.innerHTML = msg;
-            info.classList().add("danger"); 
+            info.classList.add("danger"); 
         break;
         case INFOSTATES.INFORMATIVE:
             info.innerHTML = msg;
-            info.classList().add("info"); 
+            info.classList.add("info"); 
         break;
         case INFOSTATES.WARNING:
             info.innerHTML = msg;
-            info.classList().add("warning"); 
+            info.classList.add("warning"); 
         break;
         case INFOSTATES.SUCCESS:
             info.innerHTML = msg;
-            info.classList().add("succes"); 
+            info.classList.add("succes"); 
         break;
         default : info.innerHTML = "Algo malo ha ocurrido";
-            info.classList().add("");
+            info.classList.add("");
     }
 }
 const getJsonValues = ()=>{
