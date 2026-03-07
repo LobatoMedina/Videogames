@@ -14,8 +14,12 @@ select, option{
     color: v.$black;
     @include m.container;
     fieldset{ 
-        padding: 5%;
         border: none;
+        width: 100%;
+        @include m.tablet{
+            padding: 5%;
+        }
+        
         legend{
             font-family: v.$fontTitle;
             font-weight: bold;
@@ -24,15 +28,22 @@ select, option{
         }
         div{
             width: 100%;
-            @include m.grid_columns(2);
-            padding: 1% 0;
-            .useAllColumns{
+            @include m.grid_columns(1);
+            
+            @include m.tablet{
+                @include m.grid_columns(2);
+                .useAllColumns{
                 grid-column-start: 1;
                 grid-column-end: 3;
             }
             div.useAllColumns{
                 padding: 0;
             }    
+            }
+            
+
+            padding: 1% 0;
+
             input, label{
                 font-size: 2rem;
             }

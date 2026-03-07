@@ -5,7 +5,7 @@ import java.util.List;
 public class DTOVideogame {
     private Integer Id;
     private String name;
-    private Integer esrbid;
+    private EsrbDTO esrbDTO;
     private String imgUrl;
     public String author;
     private String specs;
@@ -15,10 +15,10 @@ public class DTOVideogame {
     private Integer stock;
     private String demo;
 
-    public DTOVideogame(Integer id, String name, Integer esrbid, String imgUrl, String author, String specs, double price, List<GenreDTO> genres, List<PlatformDTO> platforms, Integer stock, String demo) {
-        Id = id;
+    public DTOVideogame(Integer id, String name, EsrbDTO esrbDTO, String imgUrl, String author, String specs, double price, List<GenreDTO> genres, List<PlatformDTO> platforms, Integer stock, String demo) {
+        this.Id = id;
         this.name = name;
-        this.esrbid = esrbid;
+        this.esrbDTO = esrbDTO;
         this.imgUrl = imgUrl;
         this.author = author;
         this.specs = specs;
@@ -45,12 +45,12 @@ public class DTOVideogame {
         this.name = name;
     }
 
-    public Integer getEsrbid() {
-        return esrbid;
+    public EsrbDTO getEsrbDTO() {
+        return esrbDTO;
     }
 
-    public void setEsrbid(Integer esrbid) {
-        this.esrbid = esrbid;
+    public void setEsrbDTO(EsrbDTO esrbid) {
+        this.esrbDTO = esrbid;
     }
 
     public String getImgUrl() {

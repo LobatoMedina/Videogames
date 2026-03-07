@@ -90,7 +90,7 @@ public class GameService implements IGameService {
         String fileName = insertImage(multipartFile);
         gameInfraestructure.updateGame(videogame.getId(),
                 videogame.getName(),
-                videogame.getEsrbid(),
+                videogame.getEsrbDTO().getId(),
                 fileName,
                 videogame.getAuthor(),
                 videogame.getSpecs(),
@@ -130,7 +130,7 @@ public class GameService implements IGameService {
         GameViewEntity gve = gameViewRepo.getReferenceById(id);
         return new DTOVideogame(gve.getId(),
                 gve.getTitle(),
-                gve.getEsrb(),
+                (EsrbDTO) esrbRepository.findById(id).stream().map(EsrbDTO::new),
                "https://localhost:8080/images/"+ gve.getImage_url(),
                 gve.getAuthor(),
                 gve.getSpecs(),
@@ -149,7 +149,7 @@ public class GameService implements IGameService {
             int tpmId= game.getId();
             videogames.add(new DTOVideogame(tpmId,
                     game.getTitle(),
-                    game.getEsrb(),
+                    (EsrbDTO) esrbRepository.findById(tpmId).stream().map(EsrbDTO::new),
                     "https://localhost:8080/images/"+game.getImage_url(),
                     game.getAuthor(),
                     game.getSpecs(),

@@ -70,8 +70,13 @@ public class GameController {
         }
     }
     @GetMapping("/getGames")
-    public List<DTOVideogame> getAllVideogames(){
-        return gameService.getAllVideogames();
+    public ResponseEntity<List<DTOVideogame>> getAllVideogames(){
+        try{
+            return ResponseEntity.ok().body(gameService.getAllVideogames());
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(null);
+        }
     }
     @GetMapping("/getGame/{GameId}")
     public DTOVideogame getUserById(@PathVariable("GameId") Integer GameId){
