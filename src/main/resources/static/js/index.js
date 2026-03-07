@@ -11,12 +11,12 @@ const INFOSTATES= {
 var info = document.getElementById("info");
 var currentId;
 //Events
-window.addEventListener("load", ()=> {
+window.addEventListener("load", async()=> {
     //load data
-    loadElements("http://localhost:8080/api/game/genre",genres);
-    loadElements("http://localhost:8080/api/game/platforms",platforms);
-    loadElements("http://localhost:8080/api/game/esrb",esrb);
-    fetchAllGames();
+    await loadElements("http://localhost:8080/api/game/genre",genres);
+    await loadElements("http://localhost:8080/api/game/platforms",platforms);
+    await loadElements("http://localhost:8080/api/game/esrb",esrb);
+    await fetchAllGames();
     //clearInputs();
     validateTransparency()
 })
@@ -59,6 +59,7 @@ addGame.addEventListener("click", async() =>{
         if (response.ok) {
             printInfo("VideoJuego agregado" , INFOSTATES.SUCCESS);
             clearInputs();
+            fetchAllGames();
         } else {
             printInfo("Hubo un error al enviar el registro", INFOSTATES.SUCCESS);
         }
@@ -94,6 +95,7 @@ const createOptionElement = (value, name, parent) =>{
     parent.appendChild(option);
 }
 const fetchAllGames = async ()=>{
+    videogames.innerHTML = "";
     try{
         const response = await fetch("http://localhost:8080/api/game/getGames",{
             headers: {
@@ -143,7 +145,7 @@ const createCardsElements= element=>{
     //card_footer
     card_footer.appendChild(a);
     card_footer.appendChild(createButton("Update", ()=>{
-        // to do
+        addGame.disabled=true
         currentId = element.Id
         nameInput.value=element.name;
         esrb.value= element.esrbDTO.id;
@@ -166,6 +168,7 @@ const createCardsElements= element=>{
     }))
     card_footer.appendChild(createButton("Delete", async ()=>{
         await deleteById(element.Id);
+        await fetchAllGames();
     }))
     article.appendChild(card_header);
     article.appendChild(card_body);
@@ -175,6 +178,7 @@ const createCardsElements= element=>{
 const createInputButton = imageName=> {
     const btn = document.createElement("input")
     btn.type= "button"
+    btn.id="btn_act"
     btn.innerHTML = "Actualizar";
     btn.addEventListener("click", async e=>{
         await updateVideogame(imageName,{id: parseInt(esrb.value),
@@ -204,6 +208,9 @@ const updateVideogame = async (imageName,esrb)=>{
         if (response.ok) {
             printInfo("VideoJuego Actualizado" , INFOSTATES.SUCCESS);
             clearInputs();
+            await fetchAllGames();
+            addGame.disabled = false;
+            div_form.removeChild(document.getElementById("btn_act"))
         } else {
             printInfo("Hubo un error al enviar el registro", INFOSTATES.WARNING);
         }
