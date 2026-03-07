@@ -145,6 +145,7 @@ const createCardsElements= element=>{
     card_body.appendChild(createTag("stock",element.stock));
     //card_footer
     card_footer.appendChild(asereje);
+
     card_footer.appendChild(createButton("Update", ()=>{
         if(document.getElementById("btn_act")!=null)return; //provisional
         selectedGenres.innerHTML="";
@@ -289,6 +290,7 @@ const validateValues = ()=>{
         if(element === ""){
             printInfo(`campo ${element.id} vacio`, INFOSTATES.DANGEROUS )    
             bool = false;
+            return;
         }
     })
     console.log(bool)
@@ -303,7 +305,7 @@ const validateValues = ()=>{
     }
     return true;
 }
-const printInfo = (msg = "", state = INFOSTATES.INFORMATIVE)=>{
+const printInfo = (msg = "esto es un mensaje", state = INFOSTATES.INFORMATIVE)=>{
     info.innerHTML= "";
     info.className = "";
     switch(state){
@@ -321,7 +323,7 @@ const printInfo = (msg = "", state = INFOSTATES.INFORMATIVE)=>{
         break;
         case INFOSTATES.SUCCESS:
             info.innerHTML = msg;
-            info.classList.add("succes"); 
+            info.classList.add("success"); 
         break;
         default : info.innerHTML = "Algo malo ha ocurrido";
             info.classList.add("");
