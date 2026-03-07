@@ -92,7 +92,7 @@ const createOptionElement = (value, name, parent) =>{
     parent.appendChild(option);
 }
 const fetchAllGames = async ()=>{
-    const response = await fetch("http://localhost:8080/api/game/getGames",{
+    const response = await fetch("http://localhost:8080/api/gamesgetGames",{
         headers: {
             'Content-Type': 'application/json; charset=UTF-8' 
         }
@@ -100,7 +100,8 @@ const fetchAllGames = async ()=>{
     if(!response.ok){
         printInfo("Error del servidor, no se pudieron cargar los datos", INFOSTATES.DANGEROUS);
     }else{
-        response.json().forEach(element =>{
+        tmp = response.json();
+        tmp.forEach(element =>{
             createCardsElements(element)
         })
     }
