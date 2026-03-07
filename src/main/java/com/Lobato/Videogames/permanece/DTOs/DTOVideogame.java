@@ -15,8 +15,11 @@ public class DTOVideogame {
     private Integer stock;
     private String demo;
 
-    public DTOVideogame(Integer id, String name, EsrbDTO esrbDTO, String imgUrl, String author, String specs, double price, List<GenreDTO> genres, List<PlatformDTO> platforms, Integer stock, String demo) {
-        this.Id = id;
+    public DTOVideogame() {
+    }
+
+    public DTOVideogame(Integer Id, String name, EsrbDTO esrbDTO, String imgUrl, String author, String specs, double price, List<GenreDTO> genres, List<PlatformDTO> platforms, Integer stock, String demo) {
+        this.Id = Id;
         this.name = name;
         this.esrbDTO = esrbDTO;
         this.imgUrl = imgUrl;

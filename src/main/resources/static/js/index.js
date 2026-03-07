@@ -26,16 +26,16 @@ window.addEventListener("scroll", () => {
 add_genre.addEventListener("click",e =>{
     e.preventDefault();
     var entry  = parseInt(genres.value);
-    if( genresA.indexOf(entry) !== -1) return;
+    if( genresA.indexOf(entry) !== -1 || entry == -1) return;
     genresA.push(entry);
-    selectedGenres.appendChild(createEntry(genres.options[genres.selectedIndex].innerHTML, genres.value,selectedGenres,genresA));
+    createEntry(genres.options[genres.selectedIndex].innerHTML, genres.value,selectedGenres,genresA);
 })
 add_platforms.addEventListener("click", e=>{
     e.preventDefault();
     let entry = parseInt(platforms.value);
-    if( platformsA.indexOf(entry) !== -1) return;
+    if( platformsA.indexOf(entry) !== -1 || entry == -1) return;
     platformsA.push(entry);
-    selectedPlatforms.appendChild(createEntry(platforms.options[platforms.selectedIndex].innerHTML, platforms.value, selectedPlatforms, platformsA));
+    createEntry(platforms.options[platforms.selectedIndex].innerHTML, platforms.value, selectedPlatforms, platformsA);
 })
 addGame.addEventListener("click", async() =>{
 
@@ -122,13 +122,14 @@ const createCardsElements= element=>{
     const card_footer =document.createElement("DIV");
     const title =document.createElement("H4")
     const image = document.createElement("IMG")
-    const a = document.createElement("A");
+    const asereje = document.createElement("A");
     
     article.className = "card";
     card_header.className = "card__header";
+    card_body.className = "card__body";
     card_footer.className = "card__footer";
-    a.src=`${element.demo}`
-    a.innerHTML= "Ver demo"
+    asereje.href=element.demo
+    asereje.innerHTML= "Ver demo"
     title.innerHTML=`Title: ${element.name}`;
     image.src =element.imgUrl
     //card_header
@@ -136,15 +137,18 @@ const createCardsElements= element=>{
     card_header.appendChild(createTag("author",element.author));
     //card_body
     card_body.appendChild(image);
-    card_body.appendChild(createTag("Categoria:", element.esrbDTO.name));
+    card_body.appendChild(createTag("Categoria", element.esrbDTO.name));
     card_body.appendChild(createBodyElements("Generos",element.genres))
     card_body.appendChild(createBodyElements("Plataformas",element.platforms))
     card_body.appendChild(createTag("Specs", element.specs));
     card_body.appendChild(createTag("price",element.price));
     card_body.appendChild(createTag("stock",element.stock));
     //card_footer
-    card_footer.appendChild(a);
+    card_footer.appendChild(asereje);
     card_footer.appendChild(createButton("Update", ()=>{
+        if(document.getElementById("btn_act")!=null)return; //provisional
+        selectedGenres.innerHTML="";
+        selectedPlatforms.innerHTML= "";
         addGame.disabled=true
         currentId = element.Id
         nameInput.value=element.name;
@@ -158,11 +162,13 @@ const createCardsElements= element=>{
         stock.value =element.stock;
         genresA.length =0;
         platformsA.length =0;
-        element.genres.forEach(element =>{
-            createEntry(element.name,element.id,selectedGenres,genresA);
+        element.genres.forEach(g =>{
+            createEntry(g.name, g.id, selectedGenres,genresA);
+            genresA.push(parseInt(g.id));
         })
-        element.platforms.forEach(element =>{
-            createEntry(element.name,element.id,selectedPlatforms, platformsA);
+        element.platforms.forEach(plt =>{
+            createEntry(plt.name,plt.id,selectedPlatforms, platformsA);
+            platformsA.push(parseInt(plt.id));
         })
         div_form.appendChild(createInputButton(element.imgUrl));
     }))
@@ -179,7 +185,7 @@ const createInputButton = imageName=> {
     const btn = document.createElement("input")
     btn.type= "button"
     btn.id="btn_act"
-    btn.innerHTML = "Actualizar";
+    btn.value = "Actualizar";
     btn.addEventListener("click", async e=>{
         await updateVideogame(imageName,{id: parseInt(esrb.value),
             name :genres.options[genres.selectedIndex].innerHTML,
@@ -195,13 +201,13 @@ const updateVideogame = async (imageName,esrb)=>{
     const jsonBlob = new Blob([JSON.stringify(getJsonUpdateValues(imageName, esrb))],{
         type: "application/json"
     })
-    fromData.append("videoGameInDTO", jsonBlob);
+    fromData.append("videogame", jsonBlob);
     try{
 
         const response = await fetch(
         "http://localhost:8080/api/game/update",
         {
-            method: "POST",
+        method: "POST",
            body: fromData
         }
     )
@@ -218,13 +224,13 @@ const updateVideogame = async (imageName,esrb)=>{
         printInfo("Se cayo el server", INFOSTATES.DANGEROUS)
     }
 }
-const deleteById = async id =>{
+const deleteById = async idp =>{
     try{
         const response = await fetch("http://localhost:8080/api/game/delete",{
             method: "POST",
-            body : {
-                id : id
-            }
+            body : new URLSearchParams({
+                id : idp
+            })
         })
         if(!response.ok){
             printInfo("Error al eliminar el Videojuego", INFOSTATES.WARNING);
@@ -343,11 +349,19 @@ const getJsonUpdateValues = (imageName,esrb)=>{
         author :author.value,
         specs: specs.value,
         price: parseFloat(precio.value),
-        genres : genresA,
-        platforms : platformsA,
+        genres : createObjectFromArray(genresA),
+        platforms : createObjectFromArray(platformsA),
         stock : parseInt(stock.value),
         demo : demo.value 
     };
+}
+const createObjectFromArray= array=>{
+    var tmp_array = [];
+    array.forEach(element => {
+        tmp_array.push({id : element,
+            name : "xd"
+        })
+    });
 }
 const clearInputs = () =>{
     nameInput.value="";
@@ -379,7 +393,7 @@ const createEntry = (name = "", id =0, parent,array)=>{
     })
     div.appendChild(label);
     div.appendChild(btn);
-    return div;
+    parent.appendChild(div);
 }
 const getFormattedId = (id, name) => name+"_"+id;
 const deleteEntry = (id, parent, array) => {

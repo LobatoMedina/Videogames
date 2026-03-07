@@ -66,14 +66,20 @@ public class GameService implements IGameService {
     }
 
     @Override
-    public String deleteVideogame(Integer id) {
-        try{
-            gameInfraestructure.deleteVideogame(id);
-            return  "eliminado correctamente";
-        }catch (Exception e) {
-            return "error al eliminar"+ e.getMessage();
+    public String deleteVideogame(Integer id)  {
+        try {
+            Path file = root.resolve(gameInfraestructure.getUrlImage(id));
+            Files.deleteIfExists(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            try{
+                gameInfraestructure.deleteVideogame(id);
+                return  "eliminado correctamente";
+            }catch (Exception e) {
+                return "error al eliminar"+ e.getMessage();
+            }
         }
-
     }
 
     @Override
@@ -84,33 +90,36 @@ public class GameService implements IGameService {
             Path file = root.resolve(gameInfraestructure.getUrlImage(videogame.getId()));
             Files.deleteIfExists(file);
         } catch (IOException e) {
-            throw new RuntimeException("No se pudo eliminar el archivo: " + e.getMessage());
-        }
-        //ahora si, añade la nueva imagen aplicando el mismo formato
-        String fileName = insertImage(multipartFile);
-        gameInfraestructure.updateGame(videogame.getId(),
-                videogame.getName(),
-                videogame.getEsrbDTO().getId(),
-                fileName,
-                videogame.getAuthor(),
-                videogame.getSpecs(),
-                videogame.getPrice(),
-                videogame.getStock(),
-                videogame.getDemo());
-        gameInfraestructure.removeGenre(videogame.getId());
-        gameInfraestructure.removePlatform(videogame.getId());
-        if(videogame.getGenres() != null){
-            for(GenreDTO id_genre : videogame.getGenres()){
-                gameInfraestructure.addNewGenre(videogame.getId(), id_genre.getId());
+            e.printStackTrace();
+        }finally{
+            try{
+                String fileName = insertImage(multipartFile);
+                gameInfraestructure.updateGame(videogame.getId(),
+                        videogame.getName(),
+                        videogame.getEsrbDTO().getId(),
+                        fileName,
+                        videogame.getAuthor(),
+                        videogame.getSpecs(),
+                        videogame.getPrice(),
+                        videogame.getStock(),
+                        videogame.getDemo());
+                gameInfraestructure.removeGenre(videogame.getId());
+                gameInfraestructure.removePlatform(videogame.getId());
+                if(videogame.getGenres() != null){
+                    for(GenreDTO id_genre : videogame.getGenres()){
+                        gameInfraestructure.addNewGenre(videogame.getId(), id_genre.getId());
+                    }
+                }
+                if(videogame.getPlatforms() != null){
+                    for(PlatformDTO id_platform : videogame.getPlatforms()){
+                        gameInfraestructure.addNewPlatform(videogame.getId(), id_platform.getId());
+                    }
+                }
+                return "Juego actualizado";
+            }catch (Exception e){
+                return e.getMessage();
             }
         }
-        if(videogame.getPlatforms() != null){
-            for(PlatformDTO id_platform : videogame.getPlatforms()){
-                gameInfraestructure.addNewPlatform(videogame.getId(), id_platform.getId());
-            }
-        }
-        return "Juego actualizado";
-
     }
     public String insertImage(MultipartFile multipartFile) throws IOException {
         String contentType = multipartFile.getContentType();

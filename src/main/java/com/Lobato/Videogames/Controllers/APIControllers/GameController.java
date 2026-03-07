@@ -44,7 +44,7 @@ public class GameController {
         }
     }
 
-    @PostMapping("/update")
+    @PostMapping(value = "/update", consumes = {"multipart/form-data"})
     public ResponseEntity<String> updateGame(
             @RequestPart DTOVideogame videogame,
             @RequestPart MultipartFile file){

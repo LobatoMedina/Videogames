@@ -7,10 +7,13 @@ public class EsrbDTO {
     private String name;
     private Integer EdadMin;
 
+    public EsrbDTO() {
+    }
+
     public EsrbDTO(Integer id, String name, Integer edadMin) {
         this.id = id;
         this.name = name;
-        EdadMin = edadMin;
+        this.EdadMin = edadMin;
     }
 
     public EsrbDTO(EsrbEntity esrbEntity) {

@@ -6,6 +6,14 @@ public class PlatformDTO {
     private Integer id;
     private String name;
 
+    public PlatformDTO() {
+    }
+
+    public PlatformDTO(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public PlatformDTO(PlatformEntity pe) {
         this.id = pe.getPlatformId();
         this.name = pe.getPlatform_platform();

@@ -6,15 +6,18 @@ public class GenreDTO {
     private Integer id;
     private String name;
 
-    public GenreDTO(GenreEntity ge) {
-        this.id = ge.getId();
-        this.name = ge.getGenre();
+    public GenreDTO() {
     }
 
     public GenreDTO(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
+    public GenreDTO(GenreEntity ge) {
+        this.id = ge.getId();
+        this.name = ge.getGenre();
+    }
+
 
     public Integer getId() {
         return id;
