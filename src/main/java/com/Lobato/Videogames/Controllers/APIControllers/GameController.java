@@ -89,7 +89,4 @@ public class GameController {
     public List<EsrbDTO> getAllEsrb(){
         return gameService.getAllEsrb();
     }
-
-
-
 }

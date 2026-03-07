@@ -8,7 +8,7 @@ public class GenreDTO {
 
     public GenreDTO(GenreEntity ge) {
         this.id = ge.getId();
-        this.name = getName();
+        this.name = ge.getGenre();
     }
 
     public GenreDTO(Integer id, String name) {

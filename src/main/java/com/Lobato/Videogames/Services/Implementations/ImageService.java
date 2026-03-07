@@ -5,13 +5,14 @@ import com.Lobato.Videogames.permanece.Infraestructure.GameInfraestructure;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-
+@Service
 public class ImageService implements IImageService {
 
     private final Path root = Paths.get("uploads");
