@@ -9,7 +9,7 @@ const INFOSTATES= {
     INFORMATIVE: "blue"
 }
 var info = document.getElementById("info");
-
+var currentId;
 //Events
 window.addEventListener("load", ()=> {
     //load data
@@ -83,6 +83,8 @@ const loadElements = async(url, parent) =>{
         json.forEach(element => {
             createOptionElement(element.id, element.name, parent);
         });
+    }).catch(e =>{
+        printInfo("Se cayo el server xd", INFOSTATES.DANGEROUS);
     })
 }
 const createOptionElement = (value, name, parent) =>{
@@ -92,18 +94,22 @@ const createOptionElement = (value, name, parent) =>{
     parent.appendChild(option);
 }
 const fetchAllGames = async ()=>{
-    const response = await fetch("http://localhost:8080/api/game/getGames",{
-        headers: {
-            'Content-Type': 'application/json; charset=UTF-8' 
-        }
-    })
-    if(!response.ok){
-        printInfo("Error del servidor, no se pudieron cargar los datos", INFOSTATES.DANGEROUS);
-    }else{
-        tmp = await response.json()
-        tmp.forEach(element =>{
-            createCardsElements(element)
+    try{
+        const response = await fetch("http://localhost:8080/api/game/getGames",{
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8' 
+            }
         })
+        if(!response.ok){
+            printInfo("Error del servidor, no se pudieron cargar los datos", INFOSTATES.WARNING);
+        }else{
+            tmp = await response.json()
+            tmp.forEach(element =>{
+                createCardsElements(element)
+            })
+        }
+    }catch(e){
+        printInfo("Se cayo el server xd", INFOSTATES.DANGEROUS);
     }
 
 }
@@ -112,14 +118,21 @@ const createCardsElements= element=>{
     const card_header =document.createElement("DIV");
     const card_body =document.createElement("DIV");
     const card_footer =document.createElement("DIV");
-
     const title =document.createElement("H4")
+    const image = document.createElement("IMG")
+    const a = document.createElement("A");
+    
+    article.className = "card";
+    card_header.className = "card__header";
+    card_footer.className = "card__footer";
+    a.src=`${element.demo}`
+    a.innerHTML= "Ver demo"
     title.innerHTML=`Title: ${element.name}`;
-
+    image.src =element.imgUrl
+    //card_header
     card_header.appendChild(title);
     card_header.appendChild(createTag("author",element.author));
-    const image = document.createElement("IMG")
-    image.src =element.imgUrl
+    //card_body
     card_body.appendChild(image);
     card_body.appendChild(createTag("Categoria:", element.esrbDTO.name));
     card_body.appendChild(createBodyElements("Generos",element.genres))
@@ -127,19 +140,95 @@ const createCardsElements= element=>{
     card_body.appendChild(createTag("Specs", element.specs));
     card_body.appendChild(createTag("price",element.price));
     card_body.appendChild(createTag("stock",element.stock));
-    const a = document.createElement("A");
-    a.src=`${element.demo}`
+    //card_footer
     card_footer.appendChild(a);
     card_footer.appendChild(createButton("Update", ()=>{
         // to do
+        currentId = element.Id
+        nameInput.value=element.name;
+        esrb.value= element.esrbDTO.id;
+        author.value= element.author;
+        specs.value=element.specs;
+        precio.value=element.price;
+        genres.value= -1;
+        platforms.value = -1;
+        demo.value = element.demo,
+        stock.value =element.stock;
+        genresA.length =0;
+        platformsA.length =0;
+        element.genres.forEach(element =>{
+            createEntry(element.name,element.id,selectedGenres,genresA);
+        })
+        element.platforms.forEach(element =>{
+            createEntry(element.name,element.id,selectedPlatforms, platformsA);
+        })
+        div_form.appendChild(createInputButton(element.imgUrl));
     }))
-    card_footer.appendChild(createButton("Delete", ()=>{
-        // to do
+    card_footer.appendChild(createButton("Delete", async ()=>{
+        await deleteById(element.Id);
     }))
     article.appendChild(card_header);
     article.appendChild(card_body);
     article.appendChild(card_footer);
     videogames.appendChild(article);
+}
+const createInputButton = imageName=> {
+    const btn = document.createElement("input")
+    btn.type= "button"
+    btn.innerHTML = "Actualizar";
+    btn.addEventListener("click", async e=>{
+        await updateVideogame(imageName,{id: parseInt(esrb.value),
+            name :genres.options[genres.selectedIndex].innerHTML,
+            EdadMin: 0
+        });
+    })
+    return btn;
+}
+const updateVideogame = async (imageName,esrb)=>{
+    if(!validateValues()){return};
+    const fromData = new FormData();
+    fromData.append("file", image.files[0]);
+    const jsonBlob = new Blob([JSON.stringify(getJsonUpdateValues(imageName, esrb))],{
+        type: "application/json"
+    })
+    fromData.append("videoGameInDTO", jsonBlob);
+    try{
+
+        const response = await fetch(
+        "http://localhost:8080/api/game/update",
+        {
+            method: "POST",
+           body: fromData
+        }
+    )
+        if (response.ok) {
+            printInfo("VideoJuego Actualizado" , INFOSTATES.SUCCESS);
+            clearInputs();
+        } else {
+            printInfo("Hubo un error al enviar el registro", INFOSTATES.WARNING);
+        }
+    }catch(e){
+        printInfo("Se cayo el server", INFOSTATES.DANGEROUS)
+    }
+}
+const deleteById = async id =>{
+    try{
+        const response = await fetch("http://localhost:8080/api/game/delete",{
+            method: "POST",
+            body : {
+                id : id
+            }
+        })
+        if(!response.ok){
+            printInfo("Error al eliminar el Videojuego", INFOSTATES.WARNING);
+        }else{
+            
+            printInfo("Videojuego eliminado correctamente", INFOSTATES.SUCCESS)
+        }
+
+    }catch(e){
+        printInfo("NOOO mi bombo", INFOSTATES.DANGEROUS)
+    }
 }
 const createBodyElements = (title,array = []) =>{
     let div_temp = document.createElement("DIV")
@@ -233,7 +322,24 @@ const getJsonValues = ()=>{
         specs: specs.value,
         price: parseFloat(precio.value),
         genres : genresA,
-        platforms : platformsA 
+        platforms : platformsA,
+        stock : parseInt(stock.value),
+        demo : demo.value 
+    };
+}
+const getJsonUpdateValues = (imageName,esrb)=>{
+    return {
+        Id : currentId,
+        name : nameInput.value,
+        esrbDTO : esrb,
+        imgUrl : imageName,
+        author :author.value,
+        specs: specs.value,
+        price: parseFloat(precio.value),
+        genres : genresA,
+        platforms : platformsA,
+        stock : parseInt(stock.value),
+        demo : demo.value 
     };
 }
 const clearInputs = () =>{
